@@ -1,7 +1,7 @@
 <?php
 namespace Src\Model;
 
-class DetailProductModel
+class CartModel
 {
 
     private $db = null;
@@ -14,9 +14,9 @@ class DetailProductModel
     {
         $statement = "
             SELECT 
-                detailProductId, productId, size, quantity
+                cartId, userId, productId, quantity, size
             FROM
-                detailproduct;
+                cart;
         ";
 
         try {
@@ -42,9 +42,9 @@ class DetailProductModel
 
         $statement = "
             SELECT 
-                detailProductId, productId, size, quantity
+                cartId, userId, productId, quantity, size
             FROM
-                detailproduct
+                cart
             WHERE " . $conditions;
 
         try {
@@ -71,9 +71,9 @@ class DetailProductModel
 
         $statement = "
             SELECT 
-                detailProductId, productId, size, quantity
+                cartId, userId, productId, quantity, size
             FROM
-                detailproduct
+                cart
             WHERE " . $conditions;
 
         try {
@@ -90,10 +90,10 @@ class DetailProductModel
     {
         $statement = "
             SELECT 
-                detailProductId, productId, size, quantity
+                cartId, userId, productId, quantity, size
             FROM
-                detailproduct
-            WHERE detailProductId = ?;
+                cart
+            WHERE cartId = ?;
         ";
 
         try {
@@ -109,18 +109,19 @@ class DetailProductModel
     public function insert(array $input)
     {
         $statement = "
-            INSERT INTO detailproduct 
-                (productId, size, quantity)
+            INSERT INTO cart 
+                (userId, productId, quantity, size)
             VALUES
-                (:productId, :size, :quantity);
+                (:userId, :productId, :quantity, :size);
         ";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
-                'productId' => $input['productId'],
-                'size' => (double) $input['size'],
+                'userId' => $input['userId'],
+                'productId' => $input['productId'] ?? null,
                 'quantity' => $input['quantity'] ?? null,
+                'size' => $input['size'] ?? null,
             ));
 
             return $input;
@@ -129,19 +130,21 @@ class DetailProductModel
         }
     }
 
-    public function update(array $input)
+    public function updateByUserIdAndProductIdAndSize(array $input)
     {
         $statement = "
-            UPDATE detailproduct
+            UPDATE cart
             SET 
                 quantity = COALESCE(:quantity, quantity)
-            WHERE detailProductId = :detailProductId;
+            WHERE userId = :userId And productId = :productId And size = :size;
         ";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
-                'detailProductId' => $input['detailProductId'],
+                'userId' => $input['userId'],
+                'productId' => $input['productId'] ?? null,
+                'size' => $input['size'] ?? null,
                 'quantity' => $input['quantity'] ?? null,
             ));
 
@@ -154,13 +157,33 @@ class DetailProductModel
     public function delete($id)
     {
         $statement = "
-            DELETE FROM detailproduct
-            WHERE productId = :productId;
+            DELETE FROM cart
+            WHERE cartId = :cartId;
         ";
 
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array('productId' => $id));
+            $statement->execute(array('cartId' => $id));
+            return $statement->rowCount();
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
+    public function deleteByUserIdAndProductIdAndSize($input)
+    {
+        $statement = "
+            DELETE FROM cart
+            WHERE userId = :userId And productId = :productId And size = :size;
+        ";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array(
+                'userId' => $input['userId'],
+                'productId' => $input['productId'] ?? null,
+                'size' => $input['size'] ?? null,
+            ));
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());

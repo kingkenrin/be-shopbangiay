@@ -40,11 +40,8 @@ class ProductController
             case 'POST':
                 $response = $this->addProduct();
                 break;
-            case 'PUT':
-                $response = $this->updateProduct();
-                break;
             case 'DELETE':
-                $response = $this->deleteUser();
+                $response = $this->deleteProduct();
                 break;
             default:
                 // $response = $this->notFoundResponse();
@@ -147,19 +144,22 @@ class ProductController
         $response['body'] = json_encode(formatRes::getData(['productId', 'name', 'price', 'mainImage', 'description', 'manufacturer', 'category'], $input));
         return $response;
     }
-    private function deleteUser()
+    private function deleteProduct()
     {
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-
-        $user = $this->userModel->findById($input['id']);
-
-        if (!$user) {
+        
+        $product = $this->productModel->findById($input['productId']);
+        
+        if (!$product) {
             $response['status_code_header'] = 'HTTP/1.1 200 OK';
-            $response['body'] = json_encode(["success" => false, "message" => "wrong user"]);
+            $response['body'] = json_encode(["success" => false, "message" => "wrong product"]);
             return $response;
         }
+        
+        $this->productOtherImageModel->delete($input['productId']);
+        $this->detailProductModel->delete($input['productId']);
 
-        $this->userModel->delete($input['id']);
+        $this->productModel->delete($input['productId']);
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(["success" => true, "message" => "delete successfully"]);
