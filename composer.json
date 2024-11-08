@@ -1,6 +1,8 @@
 {
     "require": {
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+        "cloudinary/cloudinary_php": "^2",
+        "phpmailer/phpmailer": "^6.9"
     },
     "autoload": {
         "psr-4": {
