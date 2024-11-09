@@ -2,6 +2,7 @@
 namespace Src\Controller;
 
 use Src\Model\ProductModel;
+use Src\Model\CartModel;
 use Src\Model\DetailProductModel;
 use Src\Model\ProductOtherImageModel;
 use Src\Config\Cloudinary;
@@ -15,6 +16,7 @@ class UpdateProductController
     private $productModel;
     private $productOtherImageModel;
     private $detailProductModel;
+    private $cartModel;
 
     public function __construct($db, $requestMethod)
     {
@@ -24,6 +26,7 @@ class UpdateProductController
         $this->productModel = new ProductModel($db);
         $this->productOtherImageModel = new ProductOtherImageModel($db);
         $this->detailProductModel = new DetailProductModel($db);
+        $this->cartModel = new CartModel($db);
     }
 
     public function processRequest()
@@ -77,15 +80,38 @@ class UpdateProductController
         }
 
         if (isset($input['type'])) {
-            $this->detailProductModel->delete($input['productId']);
+            $oldDetail = $this->detailProductModel->find(['productId' => $input['productId']]);
+            $oldDetailType = [];
+
+            foreach ($oldDetail as $detail) {
+                $oldDetailType[] = $detail['size'];
+            }
 
             $types = json_decode($input['type']);
+
+            $newDetailType = [];
+
+            foreach ($types as $type) {
+                $type = (array) $type;
+
+                $newDetailType[] = $type['size'];
+            }
+
+            $diff = array_diff($oldDetailType, $newDetailType);
+
+
+            $this->detailProductModel->deleteByProductId($input['productId']);
+
 
             foreach ($types as $type) {
                 $type = (array) $type;
 
                 $type['productId'] = $input['productId'];
                 $this->detailProductModel->insert($type);
+            }
+
+            foreach($diff as $size){
+                $this->cartModel->deleteByProductIdAndSize(['productId' => $input['productId'], 'size' => $size]);
             }
         }
 

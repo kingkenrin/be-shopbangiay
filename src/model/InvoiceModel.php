@@ -1,7 +1,7 @@
 <?php
 namespace Src\Model;
 
-class DetailProductModel
+class InvoiceModel
 {
 
     private $db = null;
@@ -14,9 +14,9 @@ class DetailProductModel
     {
         $statement = "
             SELECT 
-                detailProductId, productId, size, quantity
+                invoiceId, userId, address, note, orderDate, state, totalPrice
             FROM
-                detailproduct;
+                invoice;
         ";
 
         try {
@@ -42,9 +42,9 @@ class DetailProductModel
 
         $statement = "
             SELECT 
-                detailProductId, productId, size, quantity
+                invoiceId, userId, address, note, orderDate, state, totalPrice
             FROM
-                detailproduct
+                invoice
             WHERE " . $conditions;
 
         try {
@@ -71,9 +71,9 @@ class DetailProductModel
 
         $statement = "
             SELECT 
-                detailProductId, productId, size, quantity
+                invoiceId, userId, address, note, orderDate, state, totalPrice
             FROM
-                detailproduct
+                invoice
             WHERE " . $conditions;
 
         try {
@@ -90,10 +90,10 @@ class DetailProductModel
     {
         $statement = "
             SELECT 
-                detailProductId, productId, size, quantity
+                invoiceId, userId, address, note, orderDate, state, totalPrice
             FROM
-                detailproduct
-            WHERE detailProductId = ?;
+                invoice
+            WHERE invoiceId = ?;
         ";
 
         try {
@@ -109,19 +109,24 @@ class DetailProductModel
     public function insert(array $input)
     {
         $statement = "
-            INSERT INTO detailproduct 
-                (productId, size, quantity)
+            INSERT INTO invoice 
+                (userId, address, note, orderDate, state)
             VALUES
-                (:productId, :size, :quantity);
+                (:userId, :address, :note, :orderDate, :state);
         ";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
-                'productId' => $input['productId'],
-                'size' => (double) $input['size'],
-                'quantity' => $input['quantity'] ?? null,
+                'userId' => $input['userId'],
+                'address' => $input['address'] ?? null,
+                'note' => $input['note'] ?? null,
+                'state' => "Pending",
+                'orderDate' => date('j/n/Y'),
             ));
+
+            $lastId = $this->db->lastInsertId();
+            $input['invoiceId'] = $lastId;
 
             return $input;
         } catch (\PDOException $e) {
@@ -132,17 +137,23 @@ class DetailProductModel
     public function update(array $input)
     {
         $statement = "
-            UPDATE detailproduct
+            UPDATE invoice
             SET 
-                quantity = COALESCE(:quantity, quantity)
-            WHERE detailProductId = :detailProductId;
+                userId = COALESCE(:userId, userId), 
+                address = COALESCE(:address, address), 
+                note = COALESCE(:note, note), 
+                state = COALESCE(:state, state)
+            WHERE invoiceId = :invoiceId;
         ";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
-                'detailProductId' => $input['detailProductId'],
-                'quantity' => $input['quantity'] ?? null,
+                'invoiceId' => $input['invoiceId'],
+                'userId' => $input['userId']?? null,
+                'address' => $input['address'] ?? null,
+                'note' => $input['note'] ?? null,
+                'state' => $input['state'] ?? null,
             ));
 
             return $input;
@@ -151,16 +162,16 @@ class DetailProductModel
         }
     }
 
-    public function deleteByProductId($id)
+    public function delete($id)
     {
         $statement = "
-            DELETE FROM detailproduct
-            WHERE productId = :productId;
+            DELETE FROM invoice
+            WHERE invoiceId = :invoiceId;
         ";
 
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array('productId' => $id));
+            $statement->execute(array('invoiceId' => $id));
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());

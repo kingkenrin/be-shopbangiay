@@ -8,6 +8,7 @@ class ConfirmCodeController
     private $db;
     private $requestMethod;
     private $userModel;
+    private $forgetPasswordModel;
 
     public function __construct($db, $requestMethod)
     {
@@ -55,7 +56,9 @@ class ConfirmCodeController
 
             $input['password'] = $hashPassword;
 
-            $this->userModel->update($user['userId'],$input);
+            $input['userId'] = $user['userId'];
+
+            $this->userModel->update($input);
 
             $response['status_code_header'] = 'HTTP/1.1 200 OK';
             $response['body'] = json_encode(["success" => true, "message" => "Change password successfully"]);

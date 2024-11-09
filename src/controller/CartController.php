@@ -69,11 +69,11 @@ class CartController
 
     private function getCartByUserId($id)
     {
-        $result = $this->cartModel->find($id);
+        $result = $this->cartModel->find(["userId" => $id]);
 
         if (!$result) {
             $response['status_code_header'] = 'HTTP/1.1 200 OK';
-            $response['body'] = json_encode(["success" => false, "message" => "wrong user"]);
+            $response['body'] = json_encode(["success" => false, "message" => "wrong cart"]);
             return $response;
         }
 
@@ -201,8 +201,6 @@ class CartController
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
         $cart = $this->cartModel->findOne(["userId" => $input['userId']]);
-
-        $user = $this->userModel->findById($input['userId']);
 
         if (!$cart) {
             $response['status_code_header'] = 'HTTP/1.1 200 OK';

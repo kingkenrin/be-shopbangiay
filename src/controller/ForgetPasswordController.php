@@ -10,6 +10,7 @@ class ForgetPasswordController
     private $db;
     private $requestMethod;
     private $userModel;
+    private $forgetPasswordModel;
 
     public function __construct($db, $requestMethod)
     {
