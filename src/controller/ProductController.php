@@ -64,16 +64,24 @@ class ProductController
                 return formatRes::getData(['size', 'quantity'], $type);
             }, $types);
 
-            return formatRes::getData(['productId', 'name', 'price', 'mainImage', 'description', 'manufacturer', 'category', 'type'], $product);
+            $otherImage = $this->productOtherImageModel->find(['productId' => $product['productId']]);
+
+            $product['otherImages'] = [];
+
+            foreach ($otherImage as $image) {
+                $product['otherImages'][] = $image['link'];
+            }
+
+            return formatRes::getData(['productId', 'name', 'price', 'mainImage', 'otherImages', 'description', 'manufacturer', 'category', 'type'], $product);
         }, $result));
         return $response;
     }
 
     private function getProduct($id)
     {
-        $result = $this->productModel->findById($id);
+        $product = $this->productModel->findById($id);
 
-        if (!$result) {
+        if (!$product) {
             $response['status_code_header'] = 'HTTP/1.1 200 OK';
             $response['body'] = json_encode(["success" => false, "message" => "wrong product"]);
             return $response;
@@ -83,11 +91,19 @@ class ProductController
 
         $types = $this->detailProductModel->find(['productId' => $id]);
 
-        $result['type'] = array_map(function ($type) {
+        $product['type'] = array_map(function ($type) {
             return formatRes::getData(['size', 'quantity'], $type);
         }, $types);
 
-        $response['body'] = json_encode(formatRes::getData(['productId', 'name', 'price', 'mainImage', 'description', 'manufacturer', 'category', 'type'], $result));
+        $otherImage = $this->productOtherImageModel->find(['productId' => $product['productId']]);
+
+        $product['otherImages'] = [];
+
+        foreach ($otherImage as $image) {
+            $product['otherImages'][] = $image['link'];
+        }
+
+        $response['body'] = json_encode(formatRes::getData(['productId', 'name', 'price', 'mainImage','otherImages', 'description', 'manufacturer', 'category', 'type'], $product));
         return $response;
     }
 
@@ -114,7 +130,7 @@ class ProductController
         $result['otherImage'] = [];
 
         foreach ($_FILES['productImage']['name'] as $index => $file) {
-            if (strpos($file, "main")) {
+            if (strpos($file, "main") !== false) {
                 $upload = (new Cloudinary())->uploadImage(['tmp_name' => $_FILES['productImage']['tmp_name'][$index], 'name' => $file]);
                 $result['mainImage'] = $upload['secure_url'];
             } else {
@@ -147,15 +163,15 @@ class ProductController
     private function deleteProduct()
     {
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        
+
         $product = $this->productModel->findById($input['productId']);
-        
+
         if (!$product) {
             $response['status_code_header'] = 'HTTP/1.1 200 OK';
             $response['body'] = json_encode(["success" => false, "message" => "wrong product"]);
             return $response;
         }
-        
+
         $this->productOtherImageModel->delete($input['productId']);
         $this->detailProductModel->deleteByProductId($input['productId']);
 

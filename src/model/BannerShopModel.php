@@ -1,7 +1,7 @@
 <?php
 namespace Src\Model;
 
-class InvoiceModel
+class BannerShopModel
 {
 
     private $db = null;
@@ -14,9 +14,9 @@ class InvoiceModel
     {
         $statement = "
             SELECT 
-                invoiceId, userId, address, note, orderDate, state, totalPrice
+                bannerId, link
             FROM
-                invoice;
+                bannershop;
         ";
 
         try {
@@ -42,9 +42,9 @@ class InvoiceModel
 
         $statement = "
             SELECT 
-                invoiceId, userId, address, note, orderDate, state, totalPrice
+                bannerId, link
             FROM
-                invoice
+                bannershop
             WHERE " . $conditions;
 
         try {
@@ -71,9 +71,9 @@ class InvoiceModel
 
         $statement = "
             SELECT 
-                invoiceId, userId, address, note, orderDate, state, totalPrice
+                bannerId, link
             FROM
-                invoice
+                bannershop
             WHERE " . $conditions;
 
         try {
@@ -90,10 +90,10 @@ class InvoiceModel
     {
         $statement = "
             SELECT 
-                invoiceId, userId, address, note, orderDate, state, totalPrice
+                bannerId, link
             FROM
-                invoice
-            WHERE invoiceId = ?;
+                bannershop
+            WHERE bannerId = ?;
         ";
 
         try {
@@ -109,55 +109,18 @@ class InvoiceModel
     public function insert(array $input)
     {
         $statement = "
-            INSERT INTO invoice 
-                (userId, address, note, orderDate, state, totalPrice)
+            INSERT INTO bannershop 
+                (link)
             VALUES
-                (:userId, :address, :note, :orderDate, :state, :totalPrice);
+                (:link);
         ";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
-                'userId' => $input['userId'],
-                'address' => $input['address'] ?? null,
-                'note' => $input['note'] ?? null,
-                'totalPrice' => $input['totalPrice'] ?? null,
-                'state' => "Pending",
-                'orderDate' => date('j/n/Y'),
+                'link' => $input['link'],
             ));
-
-            $lastId = $this->db->lastInsertId();
-            $input['invoiceId'] = $lastId;
-
-            return $input;
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }
-    }
-
-    public function update(array $input)
-    {
-        $statement = "
-            UPDATE invoice
-            SET 
-                userId = COALESCE(:userId, userId), 
-                address = COALESCE(:address, address), 
-                note = COALESCE(:note, note), 
-                state = COALESCE(:state, state)
-            WHERE invoiceId = :invoiceId;
-        ";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->execute(array(
-                'invoiceId' => $input['invoiceId'],
-                'userId' => $input['userId']?? null,
-                'address' => $input['address'] ?? null,
-                'note' => $input['note'] ?? null,
-                'state' => $input['state'] ?? null,
-            ));
-
-            return $input;
+            return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
@@ -166,13 +129,28 @@ class InvoiceModel
     public function delete($id)
     {
         $statement = "
-            DELETE FROM invoice
-            WHERE invoiceId = :invoiceId;
+            DELETE FROM bannershop
+            WHERE bannerId = :bannerId;
         ";
 
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array('invoiceId' => $id));
+            $statement->execute(array('bannerId' => $id));
+            return $statement->rowCount();
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
+    public function deleteAll()
+    {
+        $statement = "
+            DELETE FROM bannershop
+        ";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());

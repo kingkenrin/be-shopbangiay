@@ -64,8 +64,17 @@ class InvoiceController
     {
         $result = $this->invoiceModel->findAll();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
+
         $response['body'] = json_encode(array_map(function ($invoice) {
-            return formatRes::getData(['userId', 'address', 'note', 'state', 'orderDate'], $invoice);
+            $allDetailInvoice = $this->detailInvoiceModel->find(['invoiceId' => $invoice['invoiceId']]);
+
+            $invoice['items'] = [];
+
+            foreach ($allDetailInvoice as $detailInvoice) {
+                $invoice['items'][] = ['productId' => $detailInvoice['productId'], 'quantity' => $detailInvoice['quantity'], 'size' => $detailInvoice['size']];
+            }
+
+            return formatRes::getData(['invoiceId', 'userId', 'address', 'note', 'state', 'orderDate', 'items'], $invoice);
         }, $result));
         return $response;
     }
@@ -81,8 +90,16 @@ class InvoiceController
         }
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode(array_map(function ($cart) {
-            return formatRes::getData(['userId', 'address', 'note', 'state', 'orderDate'], $cart);
+        $response['body'] = json_encode(array_map(function ($invoice) {
+            $allDetailInvoice = $this->detailInvoiceModel->find(['invoiceId' => $invoice['invoiceId']]);
+
+            $invoice['items'] = [];
+
+            foreach ($allDetailInvoice as $detailInvoice) {
+                $invoice['items'][] = ['productId' => $detailInvoice['productId'], 'quantity' => $detailInvoice['quantity'], 'size' => $detailInvoice['size']];
+            }
+
+            return formatRes::getData(['invoiceId', 'userId', 'address', 'note', 'state', 'orderDate', 'items'], $invoice);
         }, $result));
         return $response;
     }
@@ -115,11 +132,18 @@ class InvoiceController
             }
         }
 
+        $total = 0;
+
         foreach ($input['items'] as $item) {
             $detailProduct = $this->detailProductModel->findOne(["productId" => $item['productId'], "size" => $item['size']]);
             $this->detailProductModel->update(["detailProductId" => $detailProduct['detailProductId'], "quantity" => $detailProduct['quantity'] - (int) $item['quantity']]);
+
+            $product = $this->productModel->findById($item['productId']);
+
+            $total += $product['price'] * $item['quantity'];
         }
 
+        $input['totalPrice'] = $total;
         $input = $this->invoiceModel->insert($input);
 
         foreach ($input['items'] as $item) {
