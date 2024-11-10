@@ -44,7 +44,7 @@ class ProductOtherImageModel
             SELECT 
                 productOtherImageId, productId, link
             FROM
-                productotherimage;
+                productotherimage
             WHERE " . $conditions;
 
         try {
@@ -73,7 +73,7 @@ class ProductOtherImageModel
             SELECT 
                 productOtherImageId, productId, link
             FROM
-                productotherimage;
+                productotherimage
             WHERE " . $conditions;
 
         try {
@@ -92,7 +92,7 @@ class ProductOtherImageModel
             SELECT 
                 productOtherImageId, productId, link
             FROM
-                productotherimage;
+                productotherimage
             WHERE productId = ?;
         ";
 

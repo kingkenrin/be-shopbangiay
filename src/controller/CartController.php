@@ -62,7 +62,7 @@ class CartController
         $result = $this->cartModel->findAll();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(array_map(function ($cart) {
-            return formatRes::getData(['userId', 'productId', 'size', 'quantity'], $cart);
+            return formatRes::getData(['cartId','userId', 'productId', 'size', 'quantity'], $cart);
         }, $result));
         return $response;
     }
@@ -79,7 +79,7 @@ class CartController
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(array_map(function ($cart) {
-            return formatRes::getData(['userId', 'productId', 'size', 'quantity'], $cart);
+            return formatRes::getData(['cartId','userId', 'productId', 'size', 'quantity'], $cart);
         }, $result));
         return $response;
     }

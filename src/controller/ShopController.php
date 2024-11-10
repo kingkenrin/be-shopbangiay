@@ -46,6 +46,7 @@ class ShopController
     private function get()
     {
         $shop = $this->shopModel->get();
+
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode($shop);
         return $response;

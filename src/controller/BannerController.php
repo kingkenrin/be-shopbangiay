@@ -26,6 +26,9 @@ class BannerController
     public function processRequest()
     {
         switch ($this->requestMethod) {
+            case 'GET':
+                $response = $this->getBanner();
+                break;
             case 'POST':
                 $response = $this->addBanner();
                 break;
@@ -40,6 +43,17 @@ class BannerController
         if ($response['body']) {
             echo $response['body'];
         }
+    }
+
+    private function getBanner()
+    {
+        $allBanner = $this->bannerShopModel->findAll();
+
+        $response['status_code_header'] = 'HTTP/1.1 201 Created';
+        $response['body'] = json_encode(array_map(function ($banner) {
+            return formatRes::getData(['bannerId', 'link'], $banner);
+        }, $allBanner));
+        return $response;
     }
 
     private function addBanner()
