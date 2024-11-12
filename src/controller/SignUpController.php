@@ -23,7 +23,7 @@ class SignUpController
                 $response = $this->signUp();
                 break;
             default:
-                // $response = $this->notFoundResponse();
+                $response = $this->notFoundResponse();
                 break;
         }
         header($response['status_code_header']);
@@ -44,6 +44,20 @@ class SignUpController
             return $response;
         }
 
+        if (isset($input['email'])) {
+            $email = $this->userModel->find(["email" => $input['email']]);
+
+            if ($email) {
+                $response['status_code_header'] = 'HTTP/1.1 200 OK';
+                $response['body'] = json_encode(["success" => false, "message" => "email exists"]);
+                return $response;
+            }
+        } else {
+            $response['status_code_header'] = 'HTTP/1.1 200 OK';
+            $response['body'] = json_encode(["success" => false, "message" => "email is require"]);
+            return $response;
+        }
+
         $hashPassword = password_hash($input['password'], PASSWORD_DEFAULT);
 
         $input['password'] = $hashPassword;
@@ -52,6 +66,12 @@ class SignUpController
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(["success" => true, "message" => "create account successfully"]);
+        return $response;
+    }
+
+    private function notFoundResponse(){
+        $response['status_code_header'] = 'HTTP/1.1 404 NOT FOUND';
+        $response['body'] = json_encode(["success" => false, "message" => "route not found"]);
         return $response;
     }
 }

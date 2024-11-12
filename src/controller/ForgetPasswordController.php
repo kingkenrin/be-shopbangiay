@@ -28,7 +28,7 @@ class ForgetPasswordController
                 $response = $this->forgetPassWord();
                 break;
             default:
-                // $response = $this->notFoundResponse();
+                $response = $this->notFoundResponse();
                 break;
         }
         header($response['status_code_header']);
@@ -131,5 +131,11 @@ Shop bán giày uit
             }
 
         }
+    }
+
+    private function notFoundResponse(){
+        $response['status_code_header'] = 'HTTP/1.1 404 NOT FOUND';
+        $response['body'] = json_encode(["success" => false, "message" => "route not found"]);
+        return $response;
     }
 }

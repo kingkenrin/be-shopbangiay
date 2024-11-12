@@ -26,7 +26,7 @@ class ConfirmCodeController
                 $response = $this->confirmCode();
                 break;
             default:
-                // $response = $this->notFoundResponse();
+                $response = $this->notFoundResponse();
                 break;
         }
         header($response['status_code_header']);
@@ -69,5 +69,11 @@ class ConfirmCodeController
             $response['body'] = json_encode(["success" => false, "message" => "wrong code"]);
             return $response;
         }
+    }
+
+    private function notFoundResponse(){
+        $response['status_code_header'] = 'HTTP/1.1 404 NOT FOUND';
+        $response['body'] = json_encode(["success" => false, "message" => "route not found"]);
+        return $response;
     }
 }

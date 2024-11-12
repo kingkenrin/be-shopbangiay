@@ -36,6 +36,7 @@ class UpdateProductController
                 $response = $this->updateProduct();
                 break;
             default:
+                $response = $this->notFoundResponse();
                 break;
         }
         header($response['status_code_header']);
@@ -110,13 +111,20 @@ class UpdateProductController
                 $this->detailProductModel->insert($type);
             }
 
-            foreach($diff as $size){
+            foreach ($diff as $size) {
                 $this->cartModel->deleteByProductIdAndSize(['productId' => $input['productId'], 'size' => $size]);
             }
         }
 
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
         $response['body'] = json_encode(formatRes::getData(['productId', 'name', 'price', 'mainImage', 'description', 'manufacturer', 'category'], $input));
+        return $response;
+    }
+
+    private function notFoundResponse()
+    {
+        $response['status_code_header'] = 'HTTP/1.1 404 NOT FOUND';
+        $response['body'] = json_encode(["success" => false, "message" => "route not found"]);
         return $response;
     }
 }

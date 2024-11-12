@@ -23,7 +23,7 @@ class SignInController
                 $response = $this->signIn();
                 break;
             default:
-                // $response = $this->notFoundResponse();
+                $response = $this->notFoundResponse();
                 break;
         }
         header($response['status_code_header']);
@@ -54,6 +54,12 @@ class SignInController
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(["success" => true, "message" => "login successfully", "userId" => $user['userId']]);
+        return $response;
+    }
+
+    private function notFoundResponse(){
+        $response['status_code_header'] = 'HTTP/1.1 404 NOT FOUND';
+        $response['body'] = json_encode(["success" => false, "message" => "route not found"]);
         return $response;
     }
 }
