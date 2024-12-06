@@ -71,10 +71,14 @@ class InvoiceController
             $invoice['items'] = [];
 
             foreach ($allDetailInvoice as $detailInvoice) {
+                $product = $this->productModel->findById($detailInvoice['productId']);
+
+                $detailInvoice['productId'] = $product;
+
                 $invoice['items'][] = ['productId' => $detailInvoice['productId'], 'quantity' => $detailInvoice['quantity'], 'size' => $detailInvoice['size']];
             }
 
-            return formatRes::getData(['invoiceId', 'userId', 'address', 'note', 'state', 'orderDate', 'items'], $invoice);
+            return formatRes::getData(['invoiceId', 'userId', 'address', 'note', 'state', 'orderDate', 'items', 'paymentMethod'], $invoice);
         }, $result));
         return $response;
     }
@@ -96,10 +100,14 @@ class InvoiceController
             $invoice['items'] = [];
 
             foreach ($allDetailInvoice as $detailInvoice) {
+                $product = $this->productModel->findById($detailInvoice['productId']);
+
+                $detailInvoice['productId'] = $product;
+
                 $invoice['items'][] = ['productId' => $detailInvoice['productId'], 'quantity' => $detailInvoice['quantity'], 'size' => $detailInvoice['size']];
             }
 
-            return formatRes::getData(['invoiceId', 'userId', 'address', 'note', 'state', 'orderDate', 'items'], $invoice);
+            return formatRes::getData(['invoiceId', 'userId', 'address', 'note', 'state', 'orderDate', 'items', 'paymentMethod'], $invoice);
         }, $result));
         return $response;
     }
@@ -140,7 +148,7 @@ class InvoiceController
 
             $product = $this->productModel->findById($item['productId']);
 
-            $total += $product['price'] * $item['quantity'];
+            $total += (1 - $product['discount'] / 100) * $product['price'] * $item['quantity'];
         }
 
         $input['totalPrice'] = $total;
@@ -206,7 +214,8 @@ class InvoiceController
         return $response;
     }
 
-    private function notFoundResponse(){
+    private function notFoundResponse()
+    {
         $response['status_code_header'] = 'HTTP/1.1 404 NOT FOUND';
         $response['body'] = json_encode(["success" => false, "message" => "route not found"]);
         return $response;

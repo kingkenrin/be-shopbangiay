@@ -1,6 +1,7 @@
 <?php
 namespace Src\Model;
 
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 class InvoiceModel
 {
 
@@ -14,7 +15,7 @@ class InvoiceModel
     {
         $statement = "
             SELECT 
-                invoiceId, userId, address, note, orderDate, state, totalPrice
+                invoiceId, userId, address, note, orderDate, state, totalPrice, paymentMethod
             FROM
                 invoice;
         ";
@@ -42,7 +43,7 @@ class InvoiceModel
 
         $statement = "
             SELECT 
-                invoiceId, userId, address, note, orderDate, state, totalPrice
+                invoiceId, userId, address, note, orderDate, state, totalPrice, paymentMethod
             FROM
                 invoice
             WHERE " . $conditions;
@@ -71,7 +72,7 @@ class InvoiceModel
 
         $statement = "
             SELECT 
-                invoiceId, userId, address, note, orderDate, state, totalPrice
+                invoiceId, userId, address, note, orderDate, state, totalPrice, paymentMethod
             FROM
                 invoice
             WHERE " . $conditions;
@@ -90,7 +91,7 @@ class InvoiceModel
     {
         $statement = "
             SELECT 
-                invoiceId, userId, address, note, orderDate, state, totalPrice
+                invoiceId, userId, address, note, orderDate, state, totalPrice, paymentMethod
             FROM
                 invoice
             WHERE invoiceId = ?;
@@ -110,9 +111,9 @@ class InvoiceModel
     {
         $statement = "
             INSERT INTO invoice 
-                (userId, address, note, orderDate, state, totalPrice)
+                (userId, address, note, orderDate, state, totalPrice, paymentMethod)
             VALUES
-                (:userId, :address, :note, :orderDate, :state, :totalPrice);
+                (:userId, :address, :note, :orderDate, :state, :totalPrice, :paymentMethod);
         ";
 
         try {
@@ -122,6 +123,7 @@ class InvoiceModel
                 'address' => $input['address'] ?? null,
                 'note' => $input['note'] ?? null,
                 'totalPrice' => $input['totalPrice'] ?? null,
+                'paymentMethod' => $input['paymentMethod'] ?? null,
                 'state' => "Pending",
                 'orderDate' => date('j/n/Y'),
             ));

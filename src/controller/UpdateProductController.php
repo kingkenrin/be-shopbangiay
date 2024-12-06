@@ -5,6 +5,8 @@ use Src\Model\ProductModel;
 use Src\Model\CartModel;
 use Src\Model\DetailProductModel;
 use Src\Model\ProductOtherImageModel;
+use Src\Model\ManufacturerModel;
+use Src\Model\CategoryModel;
 use Src\Config\Cloudinary;
 use Src\Util\formatRes;
 use Src\Util\getFormdata;
@@ -17,6 +19,8 @@ class UpdateProductController
     private $productOtherImageModel;
     private $detailProductModel;
     private $cartModel;
+    private $categoryModel;
+    private $manufacturerModel;
 
     public function __construct($db, $requestMethod)
     {
@@ -27,6 +31,8 @@ class UpdateProductController
         $this->productOtherImageModel = new ProductOtherImageModel($db);
         $this->detailProductModel = new DetailProductModel($db);
         $this->cartModel = new CartModel($db);
+        $this->categoryModel = new CategoryModel($db);
+        $this->manufacturerModel = new ManufacturerModel($db);
     }
 
     public function processRequest()
@@ -57,6 +63,26 @@ class UpdateProductController
             return $response;
         }
 
+        if (isset($input['categoryId'])) {
+            $category = $this->categoryModel->findById($input['categoryId']);
+
+            if (!$category) {
+                $response['status_code_header'] = 'HTTP/1.1 200 OK';
+                $response['body'] = json_encode(["success" => false, "message" => "wrong category"]);
+                return $response;
+            }
+        }
+
+        if (isset($input['manufacturerId'])) {
+            $manufacturer = $this->manufacturerModel->findById($input['manufacturerId']);
+
+            if (!$manufacturer) {
+                $response['status_code_header'] = 'HTTP/1.1 200 OK';
+                $response['body'] = json_encode(["success" => false, "message" => "wrong manufacturer"]);
+                return $response;
+            }
+        }
+
         if (isset($_FILES['productImage'])) {
             $this->productOtherImageModel->delete($input['productId']);
 
@@ -72,10 +98,9 @@ class UpdateProductController
                 }
             }
 
-            $result = $this->productModel->update($input);
 
             foreach ($input['otherImage'] as $link) {
-                $this->productOtherImageModel->insert(["productId" => $result['productId'], "link" => $link]);
+                $this->productOtherImageModel->insert(["productId" => $input['productId'], "link" => $link]);
             }
 
         }
@@ -116,8 +141,10 @@ class UpdateProductController
             }
         }
 
+        $result = $this->productModel->update($input);
+
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
-        $response['body'] = json_encode(formatRes::getData(['productId', 'name', 'price', 'mainImage', 'description', 'manufacturer', 'category'], $input));
+        $response['body'] = json_encode(formatRes::getData(['productId', 'name', 'price', 'mainImage', 'description', 'manufacturerId', 'categoryId', 'discount'], $input));
         return $response;
     }
 

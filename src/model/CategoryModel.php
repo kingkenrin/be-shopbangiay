@@ -1,7 +1,7 @@
 <?php
 namespace Src\Model;
 
-class ProductModel
+class CategoryModel
 {
 
     private $db = null;
@@ -14,9 +14,9 @@ class ProductModel
     {
         $statement = "
             SELECT 
-                productId, name, price, mainImage, description, manufacturerId, categoryId, discount
+                categoryId, name
             FROM
-                product;
+                category;
         ";
 
         try {
@@ -41,10 +41,10 @@ class ProductModel
         $conditions = implode(" AND ", $conditions);
 
         $statement = "
-            SELECT
-                productId, name, price, mainImage, description, manufacturerId, categoryId, discount
+            SELECT 
+                categoryId, name
             FROM
-                product
+                category
             WHERE " . $conditions;
 
         try {
@@ -70,10 +70,10 @@ class ProductModel
         $conditions = implode(" AND ", $conditions);
 
         $statement = "
-            SELECT
-                productId, name, price, mainImage, description, manufacturerId, categoryId, discount
+            SELECT 
+                categoryId, name
             FROM
-                product
+                category
             WHERE " . $conditions;
 
         try {
@@ -89,11 +89,11 @@ class ProductModel
     public function findById($id)
     {
         $statement = "
-            SELECT
-                productId, name, price, mainImage, description, manufacturerId, categoryId, discount
+            SELECT 
+                categoryId, name
             FROM
-                product
-            WHERE productId = ?;
+                category
+            WHERE categoryId = ?;
         ";
 
         try {
@@ -109,26 +109,20 @@ class ProductModel
     public function insert(array $input)
     {
         $statement = "
-            INSERT INTO product 
-                (name, price, mainImage, description, manufacturerId, categoryId, discount)
+            INSERT INTO category 
+                (name)
             VALUES
-                (:name, :price, :mainImage, :description, :manufacturerId, :categoryId, :discount);
+                (:name);
         ";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
                 'name' => $input['name'],
-                'price' => (double) $input['price'],
-                'mainImage' => $input['mainImage'] ?? null,
-                'description' => $input['description'] ?? null,
-                'manufacturerId' => $input['manufacturerId'] ?? null,
-                'categoryId' => $input['categoryId'] ?? null,
-                'discount' => $input['discount'] ?? null,
             ));
 
             $lastId = $this->db->lastInsertId();
-            $input['productId'] = $lastId;
+            $input['categoryId'] = $lastId;
 
             return $input;
         } catch (\PDOException $e) {
@@ -139,30 +133,20 @@ class ProductModel
     public function update(array $input)
     {
         $statement = "
-            UPDATE product
+            UPDATE category
             SET 
-                name = COALESCE(:name, name), 
-                price = COALESCE(:price, price), 
-                mainImage = COALESCE(:mainImage, mainImage), 
-                description = COALESCE(:description, description), 
-                manufacturerId = COALESCE(:manufacturerId, manufacturerId), 
-                categoryId = COALESCE(:categoryId, categoryId),
-                discount = COALESCE(:discount, discount)
-            WHERE productId = :productId;
+                name = COALESCE(:name, name) 
+            WHERE categoryId = :categoryId;
         ";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
-                'productId' => $input['productId'],
-                'name' => $input['name']??null,
-                'price' => $input['price'] ?? null,
-                'mainImage' => $input['mainImage'] ?? null,
-                'description' => $input['description'] ?? null,
-                'manufacturerId' => $input['manufacturerId'] ?? null,
-                'categoryId' => $input['categoryId'] ?? null,
-                'discount' => $input['discount'] ?? null,
+                'categoryId' => $input['categoryId'],
+                'name' => $input['name'] ?? null,
             ));
+
+
 
             return $input;
         } catch (\PDOException $e) {
@@ -173,13 +157,13 @@ class ProductModel
     public function delete($id)
     {
         $statement = "
-            DELETE FROM product
-            WHERE productId = :productId;
+            DELETE FROM category
+            WHERE categoryId = :categoryId;
         ";
 
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array('productId' => $id));
+            $statement->execute(array('categoryId' => $id));
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());

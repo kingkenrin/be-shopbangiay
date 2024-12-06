@@ -62,7 +62,11 @@ class CartController
         $result = $this->cartModel->findAll();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(array_map(function ($cart) {
-            return formatRes::getData(['cartId','userId', 'productId', 'size', 'quantity'], $cart);
+            $product = $this->productModel->findById($cart['productId']);
+
+            $cart['productId'] = $product;
+
+            return formatRes::getData(['cartId', 'userId', 'productId', 'size', 'quantity'], $cart);
         }, $result));
         return $response;
     }
@@ -79,7 +83,11 @@ class CartController
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(array_map(function ($cart) {
-            return formatRes::getData(['cartId','userId', 'productId', 'size', 'quantity'], $cart);
+            $product = $this->productModel->findById($cart['productId']);
+
+            $cart['productId'] = $product;
+
+            return formatRes::getData(['cartId', 'userId', 'productId', 'size', 'quantity'], $cart);
         }, $result));
         return $response;
     }
@@ -215,7 +223,8 @@ class CartController
         return $response;
     }
 
-    private function notFoundResponse(){
+    private function notFoundResponse()
+    {
         $response['status_code_header'] = 'HTTP/1.1 404 NOT FOUND';
         $response['body'] = json_encode(["success" => false, "message" => "route not found"]);
         return $response;

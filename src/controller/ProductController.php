@@ -4,6 +4,8 @@ namespace Src\Controller;
 use Src\Model\ProductModel;
 use Src\Model\DetailProductModel;
 use Src\Model\ProductOtherImageModel;
+use Src\Model\ManufacturerModel;
+use Src\Model\CategoryModel;
 use Src\Config\Cloudinary;
 use Src\Util\formatRes;
 use Src\Util\getFormdata;
@@ -15,6 +17,8 @@ class ProductController
     private $productModel;
     private $productOtherImageModel;
     private $detailProductModel;
+    private $categoryModel;
+    private $manufacturerModel;
 
     public function __construct($db, $requestMethod)
     {
@@ -24,6 +28,8 @@ class ProductController
         $this->productModel = new ProductModel($db);
         $this->productOtherImageModel = new ProductOtherImageModel($db);
         $this->detailProductModel = new DetailProductModel($db);
+        $this->categoryModel = new CategoryModel($db);
+        $this->manufacturerModel = new ManufacturerModel($db);
     }
 
     public function processRequest()
@@ -72,7 +78,15 @@ class ProductController
                 $product['otherImages'][] = $image['link'];
             }
 
-            return formatRes::getData(['productId', 'name', 'price', 'mainImage', 'otherImages', 'description', 'manufacturer', 'category', 'type'], $product);
+            $category = $this->categoryModel->findById($product['categoryId']);
+
+            $product['categoryId'] = $category['name'];
+
+            $manufacturer = $this->manufacturerModel->findById($product['manufacturerId']);
+
+            $product['manufacturerId'] = $manufacturer['name'];
+
+            return formatRes::getData(['productId', 'name', 'price', 'mainImage', 'otherImages', 'description', 'manufacturerId', 'categoryId', 'type', 'discount'], $product);
         }, $result));
         return $response;
     }
@@ -103,7 +117,15 @@ class ProductController
             $product['otherImages'][] = $image['link'];
         }
 
-        $response['body'] = json_encode(formatRes::getData(['productId', 'name', 'price', 'mainImage','otherImages', 'description', 'manufacturer', 'category', 'type'], $product));
+        $category = $this->categoryModel->findById($product['categoryId']);
+
+        $product['categoryId'] = $category['name'];
+
+        $manufacturer = $this->manufacturerModel->findById($product['manufacturerId']);
+
+        $product['manufacturerId'] = $manufacturer['name'];
+
+        $response['body'] = json_encode(formatRes::getData(['productId', 'name', 'price', 'mainImage', 'otherImages', 'description', 'manufacturerId', 'categoryId', 'type', 'discount'], $product));
         return $response;
     }
 
@@ -116,6 +138,22 @@ class ProductController
         if ($product) {
             $response['status_code_header'] = 'HTTP/1.1 200 OK';
             $response['body'] = json_encode(["success" => false, "message" => "product exists"]);
+            return $response;
+        }
+
+        $category = $this->categoryModel->findById($input['categoryId']);
+
+        if (!$category) {
+            $response['status_code_header'] = 'HTTP/1.1 200 OK';
+            $response['body'] = json_encode(["success" => false, "message" => "wrong category"]);
+            return $response;
+        }
+
+        $manufacturer = $this->manufacturerModel->findById($input['manufacturerId']);
+
+        if (!$manufacturer) {
+            $response['status_code_header'] = 'HTTP/1.1 200 OK';
+            $response['body'] = json_encode(["success" => false, "message" => "wrong manufacturer"]);
             return $response;
         }
 
@@ -157,7 +195,7 @@ class ProductController
         $result = $this->productModel->update($result);
 
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
-        $response['body'] = json_encode(formatRes::getData(['productId', 'name', 'price', 'mainImage', 'description', 'manufacturer', 'category'], $input));
+        $response['body'] = json_encode(formatRes::getData(['productId', 'name', 'price', 'mainImage', 'description', 'manufacturerId', 'categoryId', 'type', 'discount'], $input));
         return $response;
     }
     private function deleteProduct()
@@ -182,7 +220,8 @@ class ProductController
         return $response;
     }
 
-    private function notFoundResponse(){
+    private function notFoundResponse()
+    {
         $response['status_code_header'] = 'HTTP/1.1 404 NOT FOUND';
         $response['body'] = json_encode(["success" => false, "message" => "route not found"]);
         return $response;
