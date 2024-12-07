@@ -170,6 +170,24 @@ class CartModel
         }
     }
 
+    public function deleteByProductId($input)
+    {
+        $statement = "
+            DELETE FROM cart
+            WHERE productId = :productId;
+        ";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array(
+                'productId' => $input['productId'] ?? null,
+            ));
+            return $statement->rowCount();
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
     public function deleteByProductIdAndSize($input)
     {
         $statement = "

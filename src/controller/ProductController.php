@@ -5,6 +5,7 @@ use Src\Model\ProductModel;
 use Src\Model\DetailProductModel;
 use Src\Model\ProductOtherImageModel;
 use Src\Model\ManufacturerModel;
+use Src\Model\CartModel;
 use Src\Model\CategoryModel;
 use Src\Config\Cloudinary;
 use Src\Util\formatRes;
@@ -17,6 +18,7 @@ class ProductController
     private $productModel;
     private $productOtherImageModel;
     private $detailProductModel;
+    private $cartModel;
     private $categoryModel;
     private $manufacturerModel;
 
@@ -30,6 +32,7 @@ class ProductController
         $this->detailProductModel = new DetailProductModel($db);
         $this->categoryModel = new CategoryModel($db);
         $this->manufacturerModel = new ManufacturerModel($db);
+        $this->cartModel = new CartModel($db);
     }
 
     public function processRequest()
@@ -212,6 +215,7 @@ class ProductController
 
         $this->productOtherImageModel->delete($input['productId']);
         $this->detailProductModel->deleteByProductId($input['productId']);
+        $this->cartModel->deleteByProductId($input['productId']);
 
         $this->productModel->delete($input['productId']);
 

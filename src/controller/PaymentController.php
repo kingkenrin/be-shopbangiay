@@ -36,8 +36,7 @@ class PaymentController
             // amount, $orderInfo, $items, $userId, $name, $phone, $address, $note
 
             $orderInfo = "Thanh toán đơn hàng";
-            $amount = 20000;
-
+            
             // Momo parameters
             $accessKey = 'F8BBA842ECF85';
             $secretKey = 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
@@ -62,7 +61,7 @@ class PaymentController
             $extraData = urlencode($extraData);
 
             // Raw data string to sign
-            $rawSignature = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
+            $rawSignature = "accessKey=" . $accessKey . "&amount=" . $input['amount'] . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
 
             // Generate signature using HMAC-SHA256
             $signature = hash_hmac('sha256', $rawSignature, $secretKey);
@@ -73,7 +72,7 @@ class PaymentController
                 'partnerName' => 'Test',
                 'storeId' => 'MomoTestStore',
                 'requestId' => $requestId,
-                'amount' => $amount,
+                'amount' => $input['amount'],
                 'orderId' => $orderId,
                 'orderInfo' => $orderInfo,
                 'redirectUrl' => $redirectUrl,
