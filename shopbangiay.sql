@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2024 at 09:35 PM
+-- Generation Time: Dec 07, 2024 at 09:00 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -184,6 +184,30 @@ INSERT INTO `detailproduct` (`detailProductId`, `productId`, `size`, `quantity`)
 (60, 23, 25, 100),
 (61, 23, 30, 100),
 (62, 23, 35, 100);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `feedbackId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(100) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `content` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`feedbackId`, `userId`, `name`, `email`, `phone`, `address`, `content`) VALUES
+(1, 32, 'Mingu', 'siuuuuuu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di'),
+(2, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di');
 
 -- --------------------------------------------------------
 
@@ -381,7 +405,8 @@ INSERT INTO `user` (`userId`, `username`, `password`, `name`, `avatar`, `phone`,
 (33, 'mingu', '$2y$10$skVtX7iiiFpBonp1YTvI7uRqF6g6hYydA43lcWp/rliZdeZybBPbO', 'Khát máu quá', 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731001312/shopbangiayuit/blue%20main.png.png', '0359660269', NULL, 'nha e o ho da', '12/5/2003', 'Customer'),
 (34, 'huydepzaiii', '$2y$10$H8f9tsd50Dr0wr/06H4P/ucYYKgmrVe3Of68MJEUNusZzkFz738Iy', NULL, 'https://nupet.vn/wp-content/uploads/2023/10/anh-avatar-cute-meo-nupet-2.jpg', NULL, NULL, NULL, NULL, 'Customer'),
 (36, 'minguu', '$2y$10$27kaNaO0dBbXuNEWuzmjVeJjBPMRR7NeT4MGHBhgRck8CsLHak112', 'Khát máu quáaaaaaaa', 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731089441/shopbangiayuit/red%20%282%29.jpg.jpg', '0359660269', NULL, 'nha e o ho da', '12/6/2003', 'Customer'),
-(37, 'minhquangu', '$2y$10$Mpybl4A6s4nTpwA5g.mq5.4Kfv/hEb/8f.UJ7FB8vgOQYXb83mJVa', NULL, 'https://nupet.vn/wp-content/uploads/2023/10/anh-avatar-cute-meo-nupet-2.jpg', NULL, NULL, NULL, NULL, 'Customer');
+(37, 'minhquangu', '$2y$10$Mpybl4A6s4nTpwA5g.mq5.4Kfv/hEb/8f.UJ7FB8vgOQYXb83mJVa', NULL, 'https://nupet.vn/wp-content/uploads/2023/10/anh-avatar-cute-meo-nupet-2.jpg', NULL, NULL, NULL, NULL, 'Customer'),
+(38, 'aHuyNguAc', '$2y$10$zGGOgEu8m6HX6owHDDlGRebC4oe9/rUQoSjC/WBsoU6W8F8hC78na', NULL, 'https://nupet.vn/wp-content/uploads/2023/10/anh-avatar-cute-meo-nupet-2.jpg', NULL, '21522346@gm.uit.edu.vn', NULL, NULL, 'Customer');
 
 --
 -- Indexes for dumped tables
@@ -416,6 +441,12 @@ ALTER TABLE `detailinvoice`
 --
 ALTER TABLE `detailproduct`
   ADD PRIMARY KEY (`detailProductId`);
+
+--
+-- Indexes for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`feedbackId`);
 
 --
 -- Indexes for table `forgetpassword`
@@ -494,6 +525,12 @@ ALTER TABLE `detailproduct`
   MODIFY `detailProductId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
+-- AUTO_INCREMENT for table `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `feedbackId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `forgetpassword`
 --
 ALTER TABLE `forgetpassword`
@@ -533,7 +570,7 @@ ALTER TABLE `shop`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
