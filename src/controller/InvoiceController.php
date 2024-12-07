@@ -34,10 +34,14 @@ class InvoiceController
     {
         switch ($this->requestMethod) {
             case 'GET':
-                if (isset($_GET['userId'])) {
-                    $response = $this->getInvoiceByUserId($_GET['userId']);
+                if (isset($_GET['invoiceId'])) {
+                    $response = $this->getInvoice($_GET['invoiceId']);
                 } else {
-                    $response = $this->getAllInvoices();
+                    if (isset($_GET['userId'])) {
+                        $response = $this->getInvoiceByUserId($_GET['userId']);
+                    } else {
+                        $response = $this->getAllInvoices();
+                    }
                 }
                 ;
                 break;
@@ -83,9 +87,38 @@ class InvoiceController
         return $response;
     }
 
-    private function getInvoiceByUserId($id)
+    private function getInvoice($id)
     {
-        $result = $this->invoiceModel->find(["userId" => $id]);
+        $result = $this->invoiceModel->findById($id);
+
+        if (!$result) {
+            $response['status_code_header'] = 'HTTP/1.1 200 OK';
+            $response['body'] = json_encode(["success" => false, "message" => "wrong invoice"]);
+            return $response;
+        }
+
+        $allDetailInvoice = $this->detailInvoiceModel->find(['invoiceId' => $result['invoiceId']]);
+
+        $result['items'] = [];
+
+        foreach ($allDetailInvoice as $detailInvoice) {
+            $product = $this->productModel->findById($detailInvoice['productId']);
+
+            $detailInvoice['productId'] = $product;
+
+            $result['items'][] = ['productId' => $detailInvoice['productId'], 'quantity' => $detailInvoice['quantity'], 'size' => $detailInvoice['size']];
+        }
+
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $response['body'] = json_encode(
+            formatRes::getData(['invoiceId', 'userId', 'address', 'note', 'state', 'orderDate', 'items', 'paymentMethod'], $result)
+        );
+        return $response;
+    }
+
+    private function getInvoiceByUserId($userId)
+    {
+        $result = $this->invoiceModel->find(["userId" => $userId]);
 
         if (!$result) {
             $response['status_code_header'] = 'HTTP/1.1 200 OK';
