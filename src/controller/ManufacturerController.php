@@ -60,7 +60,7 @@ class ManufacturerController
 
     private function getManufacturer($id)
     {
-        $result = $this->manufacturerModel->find(["manufacturerId" => $id]);
+        $result = $this->manufacturerModel->findOne(["manufacturerId" => $id]);
 
         if (!$result) {
             $response['status_code_header'] = 'HTTP/1.1 200 OK';
@@ -69,9 +69,7 @@ class ManufacturerController
         }
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode(array_map(function ($manufacturer) {
-            return formatRes::getData(['manufacturerId', 'name'], $manufacturer);
-        }, $result));
+        $response['body'] = json_encode(formatRes::getData(['manufacturerId', 'name'], $result));
         return $response;
     }
 

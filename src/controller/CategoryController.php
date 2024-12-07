@@ -60,7 +60,7 @@ class CategoryController
 
     private function getCategory($id)
     {
-        $result = $this->categoryModel->find(["categoryId" => $id]);
+        $result = $this->categoryModel->findOne(["categoryId" => $id]);
 
         if (!$result) {
             $response['status_code_header'] = 'HTTP/1.1 200 OK';
@@ -69,9 +69,7 @@ class CategoryController
         }
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode(array_map(function ($category) {
-            return formatRes::getData(['categoryId', 'name'], $category);
-        }, $result));
+        $response['body'] = json_encode(formatRes::getData(['categoryId', 'name'], $result));
         return $response;
     }
 
