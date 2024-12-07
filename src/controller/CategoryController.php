@@ -2,6 +2,10 @@
 namespace Src\Controller;
 
 use Src\Model\CategoryModel;
+use Src\Model\ProductOtherImageModel;
+use Src\Model\ProductModel;
+use Src\Model\DetailProductModel;
+use Src\Model\CartModel;
 use Src\Util\formatRes;
 
 class CategoryController
@@ -9,6 +13,10 @@ class CategoryController
     private $db;
     private $requestMethod;
     private $categoryModel;
+    private $productOtherImageModel;
+    private $detailProductModel;
+    private $cartModel;
+    private $productModel;
 
     public function __construct($db, $requestMethod)
     {
@@ -16,6 +24,10 @@ class CategoryController
         $this->requestMethod = $requestMethod;
 
         $this->categoryModel = new CategoryModel($db);
+        $this->productOtherImageModel = new ProductOtherImageModel($db);
+        $this->detailProductModel = new DetailProductModel($db);
+        $this->cartModel = new CartModel($db);
+        $this->productModel = new ProductModel($db);
     }
 
     public function processRequest()
@@ -131,6 +143,15 @@ class CategoryController
             $response['status_code_header'] = 'HTTP/1.1 200 OK';
             $response['body'] = json_encode(["success" => false, "message" => "wrong category"]);
             return $response;
+        }
+
+        $allProductOfCategory = $this->productModel->find(['categoryId' => $input['categoryId']]);
+
+        foreach ($allProductOfCategory as $product) {
+            $this->productOtherImageModel->delete($product['productId']);
+            $this->detailProductModel->deleteByProductId($product['productId']);
+            $this->cartModel->deleteByProductId(['productId' => $product['productId']]);
+            $this->productModel->delete($product['productId']);
         }
 
         $this->categoryModel->delete($input['categoryId']);
