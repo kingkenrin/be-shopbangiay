@@ -5,6 +5,8 @@ use Src\Model\CartModel;
 use Src\Model\UserModel;
 use Src\Model\ProductModel;
 use Src\Model\DetailProductModel;
+use Src\Model\CategoryModel;
+use Src\Model\ManufacturerModel;
 use Src\Util\formatRes;
 
 class CartController
@@ -15,6 +17,9 @@ class CartController
     private $productModel;
     private $userModel;
     private $detailProductModel;
+    private $categoryModel;
+    private $manufacturerModel;
+
 
     public function __construct($db, $requestMethod)
     {
@@ -25,6 +30,8 @@ class CartController
         $this->productModel = new ProductModel($db);
         $this->userModel = new UserModel(db: $db);
         $this->detailProductModel = new DetailProductModel($db);
+        $this->categoryModel = new CategoryModel($db);
+        $this->manufacturerModel = new ManufacturerModel($db);
     }
 
     public function processRequest()
@@ -64,6 +71,16 @@ class CartController
         $response['body'] = json_encode(array_map(function ($cart) {
             $product = $this->productModel->findById($cart['productId']);
 
+            //populate
+            $category = $this->categoryModel->findById($product['categoryId']);
+
+            $product['categoryId'] = $category;
+
+            $manufacturer = $this->manufacturerModel->findById($product['manufacturerId']);
+
+            $product['manufacturerId'] = $manufacturer;
+            //
+
             $cart['productId'] = $product;
 
             return formatRes::getData(['cartId', 'userId', 'productId', 'size', 'quantity'], $cart);
@@ -84,6 +101,16 @@ class CartController
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(array_map(function ($cart) {
             $product = $this->productModel->findById($cart['productId']);
+
+            //populate
+            $category = $this->categoryModel->findById($product['categoryId']);
+
+            $product['categoryId'] = $category;
+
+            $manufacturer = $this->manufacturerModel->findById($product['manufacturerId']);
+
+            $product['manufacturerId'] = $manufacturer;
+            //
 
             $cart['productId'] = $product;
 

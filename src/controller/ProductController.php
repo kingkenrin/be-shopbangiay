@@ -81,13 +81,15 @@ class ProductController
                 $product['otherImages'][] = $image['link'];
             }
 
+            //populate
             $category = $this->categoryModel->findById($product['categoryId']);
 
-            $product['categoryId'] = $category['name'];
+            $product['categoryId'] = $category;
 
             $manufacturer = $this->manufacturerModel->findById($product['manufacturerId']);
 
-            $product['manufacturerId'] = $manufacturer['name'];
+            $product['manufacturerId'] = $manufacturer;
+            //
 
             return formatRes::getData(['productId', 'name', 'price', 'mainImage', 'otherImages', 'description', 'manufacturerId', 'categoryId', 'type', 'discount'], $product);
         }, $result));
@@ -120,13 +122,15 @@ class ProductController
             $product['otherImages'][] = $image['link'];
         }
 
+        //populate
         $category = $this->categoryModel->findById($product['categoryId']);
 
-        $product['categoryId'] = $category['name'];
+        $product['categoryId'] = $category;
 
         $manufacturer = $this->manufacturerModel->findById($product['manufacturerId']);
 
-        $product['manufacturerId'] = $manufacturer['name'];
+        $product['manufacturerId'] = $manufacturer;
+        //
 
         $response['body'] = json_encode(formatRes::getData(['productId', 'name', 'price', 'mainImage', 'otherImages', 'description', 'manufacturerId', 'categoryId', 'type', 'discount'], $product));
         return $response;

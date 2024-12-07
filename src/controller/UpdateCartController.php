@@ -93,6 +93,14 @@ class UpdateCartController
             return $response;
         }
 
+        if (isset($input['quantity'])) {
+            if ($input['quantity'] <= 0) {
+                $response['status_code_header'] = 'HTTP/1.1 200 OK';
+                $response['body'] = json_encode(["success" => false, "message" => "quantity must be greater than 0"]);
+                return $response;
+            }
+        }
+
         $this->cartModel->updateByUserIdAndProductIdAndSize($input);
 
         $response['status_code_header'] = 'HTTP/1.1 201 Created';

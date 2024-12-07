@@ -6,6 +6,8 @@ use Src\Model\DetailInvoiceModel;
 use Src\Model\UserModel;
 use Src\Model\ProductModel;
 use Src\Model\DetailProductModel;
+use Src\Model\CategoryModel;
+use Src\Model\ManufacturerModel;
 use Src\Util\formatRes;
 
 class InvoiceController
@@ -17,6 +19,8 @@ class InvoiceController
     private $userModel;
     private $detailProductModel;
     private $detailInvoiceModel;
+    private $categoryModel;
+    private $manufacturerModel;
 
     public function __construct($db, $requestMethod)
     {
@@ -28,6 +32,8 @@ class InvoiceController
         $this->userModel = new UserModel(db: $db);
         $this->detailProductModel = new DetailProductModel($db);
         $this->detailInvoiceModel = new DetailInvoiceModel($db);
+        $this->categoryModel = new CategoryModel($db);
+        $this->manufacturerModel = new ManufacturerModel($db);
     }
 
     public function processRequest()
@@ -67,15 +73,32 @@ class InvoiceController
     private function getAllInvoices()
     {
         $result = $this->invoiceModel->findAll();
+
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
 
         $response['body'] = json_encode(array_map(function ($invoice) {
+            //populate
+            $user = $this->userModel->findById($invoice['userId']);
+
+            $invoice['userId'] = $user;
+            //
+
             $allDetailInvoice = $this->detailInvoiceModel->find(['invoiceId' => $invoice['invoiceId']]);
 
             $invoice['items'] = [];
 
             foreach ($allDetailInvoice as $detailInvoice) {
                 $product = $this->productModel->findById($detailInvoice['productId']);
+
+                //populate
+                $category = $this->categoryModel->findById($product['categoryId']);
+
+                $product['categoryId'] = $category;
+
+                $manufacturer = $this->manufacturerModel->findById($product['manufacturerId']);
+
+                $product['manufacturerId'] = $manufacturer;
+                //
 
                 $detailInvoice['productId'] = $product;
 
@@ -97,12 +120,28 @@ class InvoiceController
             return $response;
         }
 
+        //populate
+        $user = $this->userModel->findById($result['userId']);
+
+        $result['userId'] = $user;
+        //
+
         $allDetailInvoice = $this->detailInvoiceModel->find(['invoiceId' => $result['invoiceId']]);
 
         $result['items'] = [];
 
         foreach ($allDetailInvoice as $detailInvoice) {
             $product = $this->productModel->findById($detailInvoice['productId']);
+
+            //populate
+            $category = $this->categoryModel->findById($product['categoryId']);
+
+            $product['categoryId'] = $category;
+
+            $manufacturer = $this->manufacturerModel->findById($product['manufacturerId']);
+
+            $product['manufacturerId'] = $manufacturer;
+            //
 
             $detailInvoice['productId'] = $product;
 
@@ -128,12 +167,28 @@ class InvoiceController
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(array_map(function ($invoice) {
+            //populate
+            $user = $this->userModel->findById($invoice['userId']);
+
+            $invoice['userId'] = $user;
+            //
+
             $allDetailInvoice = $this->detailInvoiceModel->find(['invoiceId' => $invoice['invoiceId']]);
 
             $invoice['items'] = [];
 
             foreach ($allDetailInvoice as $detailInvoice) {
                 $product = $this->productModel->findById($detailInvoice['productId']);
+
+                //populate
+                $category = $this->categoryModel->findById($product['categoryId']);
+
+                $product['categoryId'] = $category;
+
+                $manufacturer = $this->manufacturerModel->findById($product['manufacturerId']);
+
+                $product['manufacturerId'] = $manufacturer;
+                //
 
                 $detailInvoice['productId'] = $product;
 
