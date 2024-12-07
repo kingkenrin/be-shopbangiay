@@ -18,6 +18,14 @@ class SignInController
 
     public function processRequest()
     {
+        // $this->setCorsHeaders();
+
+        // Xử lý yêu cầu OPTIONS (Preflight)
+        // if ($this->requestMethod === 'OPTIONS') {
+        //     header("HTTP/1.1 204 No Content");
+        //     exit;
+        // }
+
         switch ($this->requestMethod) {
             case 'POST':
                 $response = $this->signIn();
