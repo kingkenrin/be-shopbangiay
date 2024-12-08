@@ -90,6 +90,14 @@ class ManufacturerController
     {
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
+        $manufacturer = $this->manufacturerModel->find(["name" => $input['name']]);
+
+        if ($manufacturer) {
+            $response['status_code_header'] = 'HTTP/1.1 200 OK';
+            $response['body'] = json_encode(["success" => false, "message" => "manufacturer exists"]);
+            return $response;
+        }
+
         $this->manufacturerModel->insert($input);
 
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
@@ -113,7 +121,7 @@ class ManufacturerController
 
         if ($manufacturer && $existManufacturer['name'] != $manufacturer['name']) {
             $response['status_code_header'] = 'HTTP/1.1 200 OK';
-            $response['body'] = json_encode(["success" => false, "message" => "category exists"]);
+            $response['body'] = json_encode(["success" => false, "message" => "manufacturer exists"]);
             return $response;
         }
 
