@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2024 at 07:07 AM
+-- Generation Time: Dec 08, 2024 at 03:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -125,8 +125,6 @@ INSERT INTO `detailinvoice` (`detailInvoiceId`, `invoiceId`, `productId`, `size`
 (30, 15, 17, 25, 6),
 (31, 16, 18, 20, 10),
 (32, 16, 17, 25, 6),
-(33, 17, 18, 20, 10),
-(34, 17, 17, 25, 6),
 (35, 18, 18, 20, 10),
 (36, 18, 17, 25, 6),
 (37, 19, 18, 20, 10),
@@ -140,7 +138,9 @@ INSERT INTO `detailinvoice` (`detailInvoiceId`, `invoiceId`, `productId`, `size`
 (45, 23, 18, 20, 1),
 (46, 23, 17, 25, 1),
 (47, 24, 18, 20, 1),
-(48, 24, 17, 25, 1);
+(48, 24, 17, 25, 1),
+(49, 25, 18, 20, 1),
+(50, 25, 17, 25, 1);
 
 -- --------------------------------------------------------
 
@@ -167,10 +167,10 @@ INSERT INTO `detailproduct` (`detailProductId`, `productId`, `size`, `quantity`)
 (33, 16, 30, 100),
 (34, 16, 35, 100),
 (35, 17, 20, 100),
-(36, 17, 25, 26),
+(36, 17, 25, 25),
 (37, 17, 30, 100),
 (38, 17, 35, 100),
-(39, 18, 20, 48),
+(39, 18, 20, 47),
 (40, 18, 25, 100),
 (41, 18, 30, 100),
 (42, 18, 35, 100),
@@ -185,7 +185,27 @@ INSERT INTO `detailproduct` (`detailProductId`, `productId`, `size`, `quantity`)
 (51, 21, 20, 100),
 (52, 21, 25, 100),
 (53, 21, 30, 100),
-(54, 21, 35, 100);
+(54, 21, 35, 100),
+(79, 28, 20, 100),
+(80, 28, 25, 100),
+(81, 28, 30, 100),
+(82, 28, 35, 100),
+(83, 29, 20, 100),
+(84, 29, 25, 100),
+(85, 29, 30, 100),
+(86, 29, 35, 100),
+(87, 30, 20, 100),
+(88, 30, 25, 100),
+(89, 30, 30, 100),
+(90, 30, 35, 100),
+(91, 31, 20, 100),
+(92, 31, 25, 100),
+(93, 31, 30, 100),
+(94, 31, 35, 100),
+(95, 32, 20, 100),
+(96, 32, 25, 100),
+(97, 32, 30, 100),
+(98, 32, 35, 100);
 
 -- --------------------------------------------------------
 
@@ -258,14 +278,14 @@ INSERT INTO `invoice` (`invoiceId`, `userId`, `address`, `note`, `orderDate`, `s
 (14, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 14010000, ''),
 (15, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 14010000, ''),
 (16, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 14010000, ''),
-(17, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', -63090000, ''),
 (18, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 13239000, ''),
 (19, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 13239000, 'momo'),
 (20, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 12:46:36', 'Pending', 13239000, 'momo'),
 (21, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 12:48:18', 'Pending', 13239000, 'momo'),
 (22, 33, 'Phu quoc', 'Giao le gium e', '', 'Pending', 13239000, 'momo'),
-(23, 33, 'Phu quoc', 'Giao le gium e', '8/12/2024', 'Pending', 1743900, 'momo'),
-(24, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:03:53', 'Pending', 1743900, 'momo');
+(23, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:03:53', 'Pending', 1743900, 'momo'),
+(24, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:03:53', 'Pending', 1743900, 'momo'),
+(25, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 1743900, 'momo');
 
 -- --------------------------------------------------------
 
@@ -298,7 +318,7 @@ CREATE TABLE `product` (
   `productId` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `price` double NOT NULL,
-  `mainImage` varchar(100) DEFAULT NULL,
+  `mainImage` varchar(300) DEFAULT NULL,
   `description` varchar(3000) NOT NULL,
   `manufacturerId` varchar(100) NOT NULL,
   `categoryId` varchar(100) NOT NULL,
@@ -316,7 +336,12 @@ INSERT INTO `product` (`productId`, `name`, `price`, `mainImage`, `description`,
 (18, 'Giày Thể Thao Nam Biti\'s Hunter Core HSM000500', 771000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1730913810/shopbangiayuit/red%20main.jpg.jpg', 'Giới thiệu:\nGiày Thể Thao Nam Biti\'s Hunter Core HSM là dòng sản phẩm sở hữu thiết kế khỏe khoắn với bộ đế êm ái có khả năng đàn hồi cao. Giày hỗ trợ vận động nhẹ nhàng và cũng chính là đôi giày thời trang đang được yêu thích, sản phẩm được Biti’s chú trọng đến chất lượng và tập trung cao vào việc cải thiện cảm nhận người dùng. Thiết kế thời trang, phù hợp với xu hướng hiện đại Giày Thể Thao Nam Biti\'s Hunter Core HSM là sự lựa chọn hoàn hảo cho phái mạnh sử dụng cho các chuyến leo núi, trekking hay hoạt động ngoài trời khác.\n\nThông tin chi tiết:\n- Đế giày:\n+ Sản phẩm được sử dụng công nghệ đế Phylon cao su nhẹ độc quyền của Biti’s Hunter thế nên tạo được sự “nhẹ như bay”, ổn định cho đôi giày.\n+ Phần đế tiếp xúc sử dụng cao su kết hợp với các rãnh tạo độ ma sát, có độ bám dính cao, chống trơn trượt, khả năng chịu lực tốt, chống mài mòn và đem lại sự an toàn khi hoạt động nhất là trong những ngày trời mưa.\n+ Lót đế trong giúp ngăn mùi hiệu quả.\n+ Được ép khuôn 3D ôm trọn bàn chân, mang tới cảm giác êm ái, thoải mái và khả năng hỗ trợ trợ lực với bàn chân, tránh trượt, tụt gót, xê dịch và nâng niu bàn chân một cách tuyệt đối.\n+ Biti\'s Hunter Core HSM được thiết kế có phần đế giữa cao khoảng 3cm, thấp dần về phía mũi, mang nhiều đường cắt xẻ đem lại vẻ khỏe khoắn cho đế giày.\n+ Đế được làm từ chất liệu nhẹ, êm, mềm dẻo, chống nước, ép khuôn 3D bằng dây chuyền hiện đại tạo đàn hồi tốt, độ bền cao, hấp thu chất động, giảm ma sát, hỗ trợ lực và tạo độ êm ái đàn hồi khi di chuyển.\n\n- Thân giày:\n+ Chất liệu: Mũ quai dệt knits cấu trúc lớp co giãn nhằm tiết giảm chi tiết trên giày, hơn nữa khi sử dụng sẽ không bị nhăn và tạo nếp, không bí bách, thông thoáng khí, nhẹ, mát, dễ bảo quản và vệ sinh.\n+ Thiết kế: Sản phẩm có thiết kế trẻ trung, mạnh mẽ, đường Layer uốn lượn, tạo điểm nhấn cho giày.\n', '3', '2', 10),
 (19, 'Chuck Taylor All Star Malden Street', 1260000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731261559/shopbangiayuit/cadoi%20main.png.png', 'Những đôi giày mid-top mang tính biểu tượng này được nâng cấp với một diện mạo mới theo mùa. Đường may đa dạng gợi nhớ đến phong cách thủ công, trong khi đệm mềm mại mang lại sự thoải mái cho bước chân mùa hè của bạn.\n\nChi tiết:\n- Vải canvas cổ điển mang lại vẻ ngoài và cảm giác vượt thời gian của Chucks\n- Đệm OrthoLite giúp cung cấp sự thoải mái tối ưu\n- Lỗ xỏ dây bền, dệt chặt chẽ\n- Miếng vá Chuck Taylor mang tính biểu tượng ở mắt cá chân', '4', '2', 0),
 (20, 'Chuck 70 Plus', 2500000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731261667/shopbangiayuit/cadoi%20main.png.png', 'Một bản cập nhật bất ngờ trên một mẫu kinh điển mọi thời đại, Chuck 70 Plus kết hợp các đặc điểm mang tính biểu tượng với phong cách hướng tới tương lai. Sự kết hợp của vải canvas có trọng lượng khác nhau cùng với các đường nét táo bạo, không đối xứng tạo nên một diện mạo nổi bật. Các chi tiết cao su và miếng vá mắt cá chân được cắt ghép giữ mọi ánh nhìn tập trung vào bạn, trong khi đệm cao cấp giúp bạn cảm thấy nhẹ nhàng trên đôi chân.\n\nChi tiết:\n- Giày cao cổ với phần trên bằng vải canvas\n- Đệm OrthoLite mang lại sự thoải mái suốt cả ngày\n- Thiết kế không đối xứng, hợp nhất và lưỡi giày kéo dài tạo nên phong cách nổi bật\n- Đế cao su chia cắt làm nổi bật các yếu tố thiết kế đặc trưng của Chuck Taylor\n- Miếng vá mắt cá chân Chuck Taylor được thêm vào sản phẩm', '4', '2', 0),
-(21, 'Star Player 76', 2500000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731261737/shopbangiayuit/cadoi%20main.png.png', 'Làm mới phong cách của bạn với những đôi giày thể thao cổ thấp này. Chi tiết vải canvas và da bền bỉ mang lại phong cách cổ điển cho bước đi mùa hè của bạn, trong khi màu sắc táo bạo theo mùa thổi luồng sinh khí mới vào bất kỳ tủ đồ nào.\n\nChi tiết:\n- Vải canvas cổ điển mang lại vẻ ngoài và cảm giác vượt thời gian của Star Player\n- Đệm OrthoLite giúp cung cấp sự thoải mái tối ưu\n- Đế ngoài có hoa văn gạch đúc và mũi giày có kết cấu kim cương cổ điển\n- Biểu tượng Star Chevron bằng da mang tính biểu tượng', '4', '2', 0);
+(21, 'Star Player 76', 2500000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731261737/shopbangiayuit/cadoi%20main.png.png', 'Làm mới phong cách của bạn với những đôi giày thể thao cổ thấp này. Chi tiết vải canvas và da bền bỉ mang lại phong cách cổ điển cho bước đi mùa hè của bạn, trong khi màu sắc táo bạo theo mùa thổi luồng sinh khí mới vào bất kỳ tủ đồ nào.\n\nChi tiết:\n- Vải canvas cổ điển mang lại vẻ ngoài và cảm giác vượt thời gian của Star Player\n- Đệm OrthoLite giúp cung cấp sự thoải mái tối ưu\n- Đế ngoài có hoa văn gạch đúc và mũi giày có kết cấu kim cương cổ điển\n- Biểu tượng Star Chevron bằng da mang tính biểu tượng', '4', '2', 0),
+(28, 'minguuu', 2500000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731001312/shopbangiayuit/blue%20main.png.png', 'Làm mới phong cách của bạn với những đôi giày thể thao cổ thấp này. Chi tiết vải canvas và da bền bỉ mang lại phong cách cổ điển cho bước đi mùa hè của bạn, trong khi màu sắc táo bạo theo mùa thổi luồng sinh khí mới vào bất kỳ tủ đồ nào.\n\nChi tiết:\n- Vải canvas cổ điển mang lại vẻ ngoài và cảm giác vượt thời gian của Star Player\n- Đệm OrthoLite giúp cung cấp sự thoải mái tối ưu\n- Đế ngoài có hoa văn gạch đúc và mũi giày có kết cấu kim cương cổ điển\n- Biểu tượng Star Chevron bằng da mang tính biểu tượng', '2', '3', 20),
+(29, 'minguuuuu', 2500000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731001312/shopbangiayuit/blue%20main.png.png', 'Làm mới phong cách của bạn với những đôi giày thể thao cổ thấp này. Chi tiết vải canvas và da bền bỉ mang lại phong cách cổ điển cho bước đi mùa hè của bạn, trong khi màu sắc táo bạo theo mùa thổi luồng sinh khí mới vào bất kỳ tủ đồ nào.\n\nChi tiết:\n- Vải canvas cổ điển mang lại vẻ ngoài và cảm giác vượt thời gian của Star Player\n- Đệm OrthoLite giúp cung cấp sự thoải mái tối ưu\n- Đế ngoài có hoa văn gạch đúc và mũi giày có kết cấu kim cương cổ điển\n- Biểu tượng Star Chevron bằng da mang tính biểu tượng', '2', '3', 20),
+(30, 'minguuuuuuu', 2500000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733666285/shopbangiayuit/ayzjhhtdklmgqks1jy1m.pn', 'Làm mới phong cách của bạn với những đôi giày thể thao cổ thấp này. Chi tiết vải canvas và da bền bỉ mang lại phong cách cổ điển cho bước đi mùa hè của bạn, trong khi màu sắc táo bạo theo mùa thổi luồng sinh khí mới vào bất kỳ tủ đồ nào.\n\nChi tiết:\n- Vải canvas cổ điển mang lại vẻ ngoài và cảm giác vượt thời gian của Star Player\n- Đệm OrthoLite giúp cung cấp sự thoải mái tối ưu\n- Đế ngoài có hoa văn gạch đúc và mũi giày có kết cấu kim cương cổ điển\n- Biểu tượng Star Chevron bằng da mang tính biểu tượng', '2', '3', 20),
+(31, 'minguuuuuuuuu', 2500000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733666816/shopbangiayuit/w9pjbg8kiodp32fyxbnj.pn', 'Làm mới phong cách của bạn với những đôi giày thể thao cổ thấp này. Chi tiết vải canvas và da bền bỉ mang lại phong cách cổ điển cho bước đi mùa hè của bạn, trong khi màu sắc táo bạo theo mùa thổi luồng sinh khí mới vào bất kỳ tủ đồ nào.\n\nChi tiết:\n- Vải canvas cổ điển mang lại vẻ ngoài và cảm giác vượt thời gian của Star Player\n- Đệm OrthoLite giúp cung cấp sự thoải mái tối ưu\n- Đế ngoài có hoa văn gạch đúc và mũi giày có kết cấu kim cương cổ điển\n- Biểu tượng Star Chevron bằng da mang tính biểu tượng', '2', '3', 20),
+(32, 'minguuuuuuuuuu', 2500000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733667310/shopbangiayuit/tdai1nvqw09vl6e4ywfs.png', 'Làm mới phong cách của bạn với những đôi giày thể thao cổ thấp này. Chi tiết vải canvas và da bền bỉ mang lại phong cách cổ điển cho bước đi mùa hè của bạn, trong khi màu sắc táo bạo theo mùa thổi luồng sinh khí mới vào bất kỳ tủ đồ nào.\n\nChi tiết:\n- Vải canvas cổ điển mang lại vẻ ngoài và cảm giác vượt thời gian của Star Player\n- Đệm OrthoLite giúp cung cấp sự thoải mái tối ưu\n- Đế ngoài có hoa văn gạch đúc và mũi giày có kết cấu kim cương cổ điển\n- Biểu tượng Star Chevron bằng da mang tính biểu tượng', '2', '3', 20);
 
 -- --------------------------------------------------------
 
@@ -327,7 +352,7 @@ INSERT INTO `product` (`productId`, `name`, `price`, `mainImage`, `description`,
 CREATE TABLE `productotherimage` (
   `productOtherImageId` int(11) NOT NULL,
   `productId` int(11) NOT NULL,
-  `link` varchar(100) NOT NULL
+  `link` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
@@ -354,7 +379,22 @@ INSERT INTO `productotherimage` (`productOtherImageId`, `productId`, `link`) VAL
 (50, 21, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731261743/shopbangiayuit/tronggiay.png.png'),
 (60, 18, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731076705/shopbangiayuit/blue.jpg.jpg'),
 (61, 18, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173943/shopbangiayuit/logo.jpg.jpg'),
-(62, 18, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173945/shopbangiayuit/red%20%282%29.jpg.jpg');
+(62, 18, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173945/shopbangiayuit/red%20%282%29.jpg.jpg'),
+(75, 28, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731076705/shopbangiayuit/blue.jpg.jpg'),
+(76, 28, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173943/shopbangiayuit/logo.jpg.jpg'),
+(77, 28, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173945/shopbangiayuit/red%20%282%29.jpg.jpg'),
+(78, 29, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731076705/shopbangiayuit/blue.jpg.jpg'),
+(79, 29, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173943/shopbangiayuit/logo.jpg.jpg'),
+(80, 29, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173945/shopbangiayuit/red%20%282%29.jpg.jpg'),
+(81, 30, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733666289/shopbangiayuit/z2vxb5rpltql0vkyhyea.jp'),
+(82, 30, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733666291/shopbangiayuit/mkcslpy4v4io6ghhrrbb.jp'),
+(83, 30, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733666293/shopbangiayuit/vaow5amuslbmsrnqhpmb.jp'),
+(84, 31, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733666818/shopbangiayuit/iv8sicg1hg0l7wnb6jqi.jp'),
+(85, 31, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733666821/shopbangiayuit/i3s3gs0ueycqslepanyv.jp'),
+(86, 31, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733666823/shopbangiayuit/ue9q5rdnbndvefiwx6s5.jp'),
+(87, 32, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733667313/shopbangiayuit/gdnksbwoiyh05evdamkn.jpg'),
+(88, 32, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733667315/shopbangiayuit/tmrbvvgllo0aqtbklphx.jpg'),
+(89, 32, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733667318/shopbangiayuit/rr1s8lhudwpt8632oqip.jpg');
 
 -- --------------------------------------------------------
 
@@ -519,13 +559,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `detailinvoice`
 --
 ALTER TABLE `detailinvoice`
-  MODIFY `detailInvoiceId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `detailInvoiceId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `detailproduct`
 --
 ALTER TABLE `detailproduct`
-  MODIFY `detailProductId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `detailProductId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `feedback`
@@ -543,7 +583,7 @@ ALTER TABLE `forgetpassword`
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invoiceId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `invoiceId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `manufacturer`
@@ -555,13 +595,13 @@ ALTER TABLE `manufacturer`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `productotherimage`
 --
 ALTER TABLE `productotherimage`
-  MODIFY `productOtherImageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `productOtherImageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `shop`
