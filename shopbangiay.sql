@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2024 at 06:05 PM
+-- Generation Time: Dec 08, 2024 at 06:29 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -147,7 +147,9 @@ INSERT INTO `detailinvoice` (`detailInvoiceId`, `invoiceId`, `productId`, `size`
 (47, 24, 18, 20, 1),
 (48, 24, 17, 25, 1),
 (49, 25, 18, 20, 1),
-(50, 25, 17, 25, 1);
+(50, 25, 17, 25, 1),
+(51, 26, 18, 20, 1),
+(52, 26, 17, 25, 1);
 
 -- --------------------------------------------------------
 
@@ -174,10 +176,10 @@ INSERT INTO `detailproduct` (`detailProductId`, `productId`, `size`, `quantity`)
 (33, 16, 30, 100),
 (34, 16, 35, 100),
 (35, 17, 20, 100),
-(36, 17, 25, 25),
+(36, 17, 25, 23),
 (37, 17, 30, 100),
 (38, 17, 35, 100),
-(39, 18, 20, 47),
+(39, 18, 20, 45),
 (40, 18, 25, 100),
 (41, 18, 30, 100),
 (42, 18, 35, 100),
@@ -237,10 +239,10 @@ CREATE TABLE `feedback` (
 --
 
 INSERT INTO `feedback` (`feedbackId`, `userId`, `name`, `email`, `phone`, `address`, `content`, `createdAt`, `isHandle`) VALUES
-(1, 32, 'Mingu', 'siuuuuuu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '', 0),
-(2, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '', 0),
-(3, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '', 0),
-(4, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '8/12/2024', 0),
+(1, 32, 'Mingu', 'siuuuuuu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 23:14:36', 0),
+(2, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 23:14:36', 0),
+(3, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 23:14:36', 0),
+(4, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 23:14:36', 0),
 (5, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 13:03:49', 0),
 (6, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 23:14:36', 0);
 
@@ -270,31 +272,34 @@ CREATE TABLE `invoice` (
   `orderDate` varchar(100) NOT NULL DEFAULT current_timestamp(),
   `state` enum('Pending','Shipping','Confirming','Cancel','Done') DEFAULT NULL,
   `totalPrice` double NOT NULL,
-  `paymentMethod` varchar(20) NOT NULL
+  `paymentMethod` enum('Momo','Cod') NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `phone` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `invoice`
 --
 
-INSERT INTO `invoice` (`invoiceId`, `userId`, `address`, `note`, `orderDate`, `state`, `totalPrice`, `paymentMethod`) VALUES
-(6, 32, 'Gia Lai', 'thôi giao từ từ đi anh', '2024-12-08 13:08:22', 'Done', 0, ''),
-(8, 32, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 0, ''),
-(9, 32, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 12000000, ''),
-(10, 32, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 20000000, ''),
-(11, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, ''),
-(12, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, ''),
-(14, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, ''),
-(15, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, ''),
-(16, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, ''),
-(18, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 13239000, ''),
-(19, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 13239000, 'momo'),
-(20, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 12:46:36', 'Pending', 13239000, 'momo'),
-(21, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 12:48:18', 'Pending', 13239000, 'momo'),
-(22, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 13239000, 'momo'),
-(23, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:03:53', 'Pending', 1743900, 'momo'),
-(24, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:03:53', 'Pending', 1743900, 'momo'),
-(25, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 1743900, 'momo');
+INSERT INTO `invoice` (`invoiceId`, `userId`, `address`, `note`, `orderDate`, `state`, `totalPrice`, `paymentMethod`, `name`, `phone`) VALUES
+(6, 32, 'Gia Lai', 'thôi giao từ từ đi anh', '2024-12-08 13:08:22', 'Done', 0, 'Momo', 'Mingu', '0915243154'),
+(8, 32, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 0, 'Momo', 'Mingu', '0915243154'),
+(9, 32, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 12000000, 'Momo', 'Mingu', '0915243154'),
+(10, 32, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 20000000, 'Momo', 'Mingu', '0915243154'),
+(11, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, 'Momo', 'Mingu', '0915243154'),
+(12, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, 'Momo', 'Mingu', '0915243154'),
+(14, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, 'Momo', 'Mingu', '0915243154'),
+(15, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, 'Momo', 'Mingu', '0915243154'),
+(16, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, 'Momo', 'Mingu', '0915243154'),
+(18, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 13239000, 'Momo', 'Mingu', '0915243154'),
+(19, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 13239000, 'Momo', 'Mingu', '0915243154'),
+(20, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 12:46:36', 'Pending', 13239000, 'Momo', 'Mingu', '0915243154'),
+(21, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 12:48:18', 'Pending', 13239000, 'Momo', 'Mingu', '0915243154'),
+(22, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 13239000, 'Momo', 'Mingu', '0915243154'),
+(23, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:03:53', 'Pending', 1743900, 'Momo', 'Mingu', '0915243154'),
+(24, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:03:53', 'Pending', 1743900, 'Momo', 'Mingu', '0915243154'),
+(25, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 1743900, 'Momo', 'Mingu', '0915243154'),
+(26, 33, 'Phu quoc', 'Giao le gium e', '2024-12-09 00:25:43', 'Pending', 1743900, 'Momo', 'Mingu', '0915243154');
 
 -- --------------------------------------------------------
 
@@ -568,7 +573,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `detailinvoice`
 --
 ALTER TABLE `detailinvoice`
-  MODIFY `detailInvoiceId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `detailInvoiceId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `detailproduct`
@@ -592,7 +597,7 @@ ALTER TABLE `forgetpassword`
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invoiceId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `invoiceId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `manufacturer`
