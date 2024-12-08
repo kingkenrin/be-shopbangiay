@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2024 at 09:00 AM
+-- Generation Time: Dec 08, 2024 at 07:07 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -130,7 +130,17 @@ INSERT INTO `detailinvoice` (`detailInvoiceId`, `invoiceId`, `productId`, `size`
 (35, 18, 18, 20, 10),
 (36, 18, 17, 25, 6),
 (37, 19, 18, 20, 10),
-(38, 19, 17, 25, 6);
+(38, 19, 17, 25, 6),
+(39, 20, 18, 20, 10),
+(40, 20, 17, 25, 6),
+(41, 21, 18, 20, 10),
+(42, 21, 17, 25, 6),
+(43, 22, 18, 20, 10),
+(44, 22, 17, 25, 6),
+(45, 23, 18, 20, 1),
+(46, 23, 17, 25, 1),
+(47, 24, 18, 20, 1),
+(48, 24, 17, 25, 1);
 
 -- --------------------------------------------------------
 
@@ -157,10 +167,10 @@ INSERT INTO `detailproduct` (`detailProductId`, `productId`, `size`, `quantity`)
 (33, 16, 30, 100),
 (34, 16, 35, 100),
 (35, 17, 20, 100),
-(36, 17, 25, 46),
+(36, 17, 25, 26),
 (37, 17, 30, 100),
 (38, 17, 35, 100),
-(39, 18, 20, 30),
+(39, 18, 20, 48),
 (40, 18, 25, 100),
 (41, 18, 30, 100),
 (42, 18, 35, 100),
@@ -175,15 +185,7 @@ INSERT INTO `detailproduct` (`detailProductId`, `productId`, `size`, `quantity`)
 (51, 21, 20, 100),
 (52, 21, 25, 100),
 (53, 21, 30, 100),
-(54, 21, 35, 100),
-(55, 22, 20, 100),
-(56, 22, 25, 100),
-(57, 22, 30, 100),
-(58, 22, 35, 100),
-(59, 23, 20, 100),
-(60, 23, 25, 100),
-(61, 23, 30, 100),
-(62, 23, 35, 100);
+(54, 21, 35, 100);
 
 -- --------------------------------------------------------
 
@@ -198,16 +200,20 @@ CREATE TABLE `feedback` (
   `email` varchar(100) NOT NULL,
   `phone` varchar(100) NOT NULL,
   `address` varchar(100) NOT NULL,
-  `content` varchar(100) NOT NULL
+  `content` varchar(100) NOT NULL,
+  `createdAt` varchar(100) NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `feedback`
 --
 
-INSERT INTO `feedback` (`feedbackId`, `userId`, `name`, `email`, `phone`, `address`, `content`) VALUES
-(1, 32, 'Mingu', 'siuuuuuu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di'),
-(2, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di');
+INSERT INTO `feedback` (`feedbackId`, `userId`, `name`, `email`, `phone`, `address`, `content`, `createdAt`) VALUES
+(1, 32, 'Mingu', 'siuuuuuu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', ''),
+(2, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', ''),
+(3, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', ''),
+(4, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '8/12/2024'),
+(5, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 13:03:49');
 
 -- --------------------------------------------------------
 
@@ -232,7 +238,7 @@ CREATE TABLE `invoice` (
   `userId` int(11) NOT NULL,
   `address` varchar(100) NOT NULL,
   `note` varchar(100) NOT NULL,
-  `orderDate` varchar(100) NOT NULL,
+  `orderDate` varchar(100) NOT NULL DEFAULT current_timestamp(),
   `state` enum('Pending','Shipping','Confirming','Cancel','Done') DEFAULT NULL,
   `totalPrice` double NOT NULL,
   `paymentMethod` varchar(20) NOT NULL
@@ -243,18 +249,23 @@ CREATE TABLE `invoice` (
 --
 
 INSERT INTO `invoice` (`invoiceId`, `userId`, `address`, `note`, `orderDate`, `state`, `totalPrice`, `paymentMethod`) VALUES
-(6, 32, 'Gia Lai', 'thôi giao từ từ đi anh', '9/11/2024', 'Done', 0, ''),
-(8, 32, 'Phu quoc', 'Giao le gium e', '9/11/2024', 'Pending', 0, ''),
-(9, 32, 'Phu quoc', 'Giao le gium e', '9/11/2024', 'Pending', 12000000, ''),
-(10, 32, 'Phu quoc', 'Giao le gium e', '9/11/2024', 'Pending', 20000000, ''),
-(11, 33, 'Phu quoc', 'Giao le gium e', '10/11/2024', 'Pending', 14010000, ''),
-(12, 33, 'Phu quoc', 'Giao le gium e', '6/12/2024', 'Pending', 14010000, ''),
-(14, 33, 'Phu quoc', 'Giao le gium e', '6/12/2024', 'Pending', 14010000, ''),
-(15, 33, 'Phu quoc', 'Giao le gium e', '7/12/2024', 'Pending', 14010000, ''),
-(16, 33, 'Phu quoc', 'Giao le gium e', '7/12/2024', 'Pending', 14010000, ''),
-(17, 33, 'Phu quoc', 'Giao le gium e', '7/12/2024', 'Pending', -63090000, ''),
-(18, 33, 'Phu quoc', 'Giao le gium e', '7/12/2024', 'Pending', 13239000, ''),
-(19, 33, 'Phu quoc', 'Giao le gium e', '7/12/2024', 'Pending', 13239000, 'momo');
+(6, 32, 'Gia Lai', 'thôi giao từ từ đi anh', '0000-00-00 00:00:00', 'Done', 0, ''),
+(8, 32, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 0, ''),
+(9, 32, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 12000000, ''),
+(10, 32, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 20000000, ''),
+(11, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 14010000, ''),
+(12, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 14010000, ''),
+(14, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 14010000, ''),
+(15, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 14010000, ''),
+(16, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 14010000, ''),
+(17, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', -63090000, ''),
+(18, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 13239000, ''),
+(19, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 13239000, 'momo'),
+(20, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 12:46:36', 'Pending', 13239000, 'momo'),
+(21, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 12:48:18', 'Pending', 13239000, 'momo'),
+(22, 33, 'Phu quoc', 'Giao le gium e', '', 'Pending', 13239000, 'momo'),
+(23, 33, 'Phu quoc', 'Giao le gium e', '8/12/2024', 'Pending', 1743900, 'momo'),
+(24, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:03:53', 'Pending', 1743900, 'momo');
 
 -- --------------------------------------------------------
 
@@ -305,9 +316,7 @@ INSERT INTO `product` (`productId`, `name`, `price`, `mainImage`, `description`,
 (18, 'Giày Thể Thao Nam Biti\'s Hunter Core HSM000500', 771000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1730913810/shopbangiayuit/red%20main.jpg.jpg', 'Giới thiệu:\nGiày Thể Thao Nam Biti\'s Hunter Core HSM là dòng sản phẩm sở hữu thiết kế khỏe khoắn với bộ đế êm ái có khả năng đàn hồi cao. Giày hỗ trợ vận động nhẹ nhàng và cũng chính là đôi giày thời trang đang được yêu thích, sản phẩm được Biti’s chú trọng đến chất lượng và tập trung cao vào việc cải thiện cảm nhận người dùng. Thiết kế thời trang, phù hợp với xu hướng hiện đại Giày Thể Thao Nam Biti\'s Hunter Core HSM là sự lựa chọn hoàn hảo cho phái mạnh sử dụng cho các chuyến leo núi, trekking hay hoạt động ngoài trời khác.\n\nThông tin chi tiết:\n- Đế giày:\n+ Sản phẩm được sử dụng công nghệ đế Phylon cao su nhẹ độc quyền của Biti’s Hunter thế nên tạo được sự “nhẹ như bay”, ổn định cho đôi giày.\n+ Phần đế tiếp xúc sử dụng cao su kết hợp với các rãnh tạo độ ma sát, có độ bám dính cao, chống trơn trượt, khả năng chịu lực tốt, chống mài mòn và đem lại sự an toàn khi hoạt động nhất là trong những ngày trời mưa.\n+ Lót đế trong giúp ngăn mùi hiệu quả.\n+ Được ép khuôn 3D ôm trọn bàn chân, mang tới cảm giác êm ái, thoải mái và khả năng hỗ trợ trợ lực với bàn chân, tránh trượt, tụt gót, xê dịch và nâng niu bàn chân một cách tuyệt đối.\n+ Biti\'s Hunter Core HSM được thiết kế có phần đế giữa cao khoảng 3cm, thấp dần về phía mũi, mang nhiều đường cắt xẻ đem lại vẻ khỏe khoắn cho đế giày.\n+ Đế được làm từ chất liệu nhẹ, êm, mềm dẻo, chống nước, ép khuôn 3D bằng dây chuyền hiện đại tạo đàn hồi tốt, độ bền cao, hấp thu chất động, giảm ma sát, hỗ trợ lực và tạo độ êm ái đàn hồi khi di chuyển.\n\n- Thân giày:\n+ Chất liệu: Mũ quai dệt knits cấu trúc lớp co giãn nhằm tiết giảm chi tiết trên giày, hơn nữa khi sử dụng sẽ không bị nhăn và tạo nếp, không bí bách, thông thoáng khí, nhẹ, mát, dễ bảo quản và vệ sinh.\n+ Thiết kế: Sản phẩm có thiết kế trẻ trung, mạnh mẽ, đường Layer uốn lượn, tạo điểm nhấn cho giày.\n', '3', '2', 10),
 (19, 'Chuck Taylor All Star Malden Street', 1260000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731261559/shopbangiayuit/cadoi%20main.png.png', 'Những đôi giày mid-top mang tính biểu tượng này được nâng cấp với một diện mạo mới theo mùa. Đường may đa dạng gợi nhớ đến phong cách thủ công, trong khi đệm mềm mại mang lại sự thoải mái cho bước chân mùa hè của bạn.\n\nChi tiết:\n- Vải canvas cổ điển mang lại vẻ ngoài và cảm giác vượt thời gian của Chucks\n- Đệm OrthoLite giúp cung cấp sự thoải mái tối ưu\n- Lỗ xỏ dây bền, dệt chặt chẽ\n- Miếng vá Chuck Taylor mang tính biểu tượng ở mắt cá chân', '4', '2', 0),
 (20, 'Chuck 70 Plus', 2500000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731261667/shopbangiayuit/cadoi%20main.png.png', 'Một bản cập nhật bất ngờ trên một mẫu kinh điển mọi thời đại, Chuck 70 Plus kết hợp các đặc điểm mang tính biểu tượng với phong cách hướng tới tương lai. Sự kết hợp của vải canvas có trọng lượng khác nhau cùng với các đường nét táo bạo, không đối xứng tạo nên một diện mạo nổi bật. Các chi tiết cao su và miếng vá mắt cá chân được cắt ghép giữ mọi ánh nhìn tập trung vào bạn, trong khi đệm cao cấp giúp bạn cảm thấy nhẹ nhàng trên đôi chân.\n\nChi tiết:\n- Giày cao cổ với phần trên bằng vải canvas\n- Đệm OrthoLite mang lại sự thoải mái suốt cả ngày\n- Thiết kế không đối xứng, hợp nhất và lưỡi giày kéo dài tạo nên phong cách nổi bật\n- Đế cao su chia cắt làm nổi bật các yếu tố thiết kế đặc trưng của Chuck Taylor\n- Miếng vá mắt cá chân Chuck Taylor được thêm vào sản phẩm', '4', '2', 0),
-(21, 'Star Player 76', 2500000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731261737/shopbangiayuit/cadoi%20main.png.png', 'Làm mới phong cách của bạn với những đôi giày thể thao cổ thấp này. Chi tiết vải canvas và da bền bỉ mang lại phong cách cổ điển cho bước đi mùa hè của bạn, trong khi màu sắc táo bạo theo mùa thổi luồng sinh khí mới vào bất kỳ tủ đồ nào.\n\nChi tiết:\n- Vải canvas cổ điển mang lại vẻ ngoài và cảm giác vượt thời gian của Star Player\n- Đệm OrthoLite giúp cung cấp sự thoải mái tối ưu\n- Đế ngoài có hoa văn gạch đúc và mũi giày có kết cấu kim cương cổ điển\n- Biểu tượng Star Chevron bằng da mang tính biểu tượng', '4', '2', 0),
-(22, 'heheheheh', 2500000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731001312/shopbangiayuit/blue%20main.png.png', 'Làm mới phong cách của bạn với những đôi giày thể thao cổ thấp này. Chi tiết vải canvas và da bền bỉ mang lại phong cách cổ điển cho bước đi mùa hè của bạn, trong khi màu sắc táo bạo theo mùa thổi luồng sinh khí mới vào bất kỳ tủ đồ nào.\n\nChi tiết:\n- Vải canvas cổ điển mang lại vẻ ngoài và cảm giác vượt thời gian của Star Player\n- Đệm OrthoLite giúp cung cấp sự thoải mái tối ưu\n- Đế ngoài có hoa văn gạch đúc và mũi giày có kết cấu kim cương cổ điển\n- Biểu tượng Star Chevron bằng da mang tính biểu tượng', '2', '2', 0),
-(23, 'mingu', 2500000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731001312/shopbangiayuit/blue%20main.png.png', 'Làm mới phong cách của bạn với những đôi giày thể thao cổ thấp này. Chi tiết vải canvas và da bền bỉ mang lại phong cách cổ điển cho bước đi mùa hè của bạn, trong khi màu sắc táo bạo theo mùa thổi luồng sinh khí mới vào bất kỳ tủ đồ nào.\n\nChi tiết:\n- Vải canvas cổ điển mang lại vẻ ngoài và cảm giác vượt thời gian của Star Player\n- Đệm OrthoLite giúp cung cấp sự thoải mái tối ưu\n- Đế ngoài có hoa văn gạch đúc và mũi giày có kết cấu kim cương cổ điển\n- Biểu tượng Star Chevron bằng da mang tính biểu tượng', '2', '2', 20);
+(21, 'Star Player 76', 2500000, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731261737/shopbangiayuit/cadoi%20main.png.png', 'Làm mới phong cách của bạn với những đôi giày thể thao cổ thấp này. Chi tiết vải canvas và da bền bỉ mang lại phong cách cổ điển cho bước đi mùa hè của bạn, trong khi màu sắc táo bạo theo mùa thổi luồng sinh khí mới vào bất kỳ tủ đồ nào.\n\nChi tiết:\n- Vải canvas cổ điển mang lại vẻ ngoài và cảm giác vượt thời gian của Star Player\n- Đệm OrthoLite giúp cung cấp sự thoải mái tối ưu\n- Đế ngoài có hoa văn gạch đúc và mũi giày có kết cấu kim cương cổ điển\n- Biểu tượng Star Chevron bằng da mang tính biểu tượng', '4', '2', 0);
 
 -- --------------------------------------------------------
 
@@ -343,12 +352,6 @@ INSERT INTO `productotherimage` (`productOtherImageId`, `productId`, `link`) VAL
 (48, 21, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731261739/shopbangiayuit/degiay.png.png'),
 (49, 21, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731261741/shopbangiayuit/magiay.png.png'),
 (50, 21, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731261743/shopbangiayuit/tronggiay.png.png'),
-(54, 22, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173943/shopbangiayuit/logo.jpg.jpg'),
-(55, 22, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173945/shopbangiayuit/red%20%282%29.jpg.jpg'),
-(56, 22, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731081634/shopbangiayuit/red.jpg.jpg'),
-(57, 23, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173943/shopbangiayuit/logo.jpg.jpg'),
-(58, 23, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173945/shopbangiayuit/red%20%282%29.jpg.jpg'),
-(59, 23, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731081634/shopbangiayuit/red.jpg.jpg'),
 (60, 18, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731076705/shopbangiayuit/blue.jpg.jpg'),
 (61, 18, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173943/shopbangiayuit/logo.jpg.jpg'),
 (62, 18, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173945/shopbangiayuit/red%20%282%29.jpg.jpg');
@@ -401,10 +404,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userId`, `username`, `password`, `name`, `avatar`, `phone`, `email`, `address`, `birthday`, `role`) VALUES
-(32, 'huydepzai', '$2y$10$IuH0vQ8el5Q4zpR6Bmm5Ye7tyF3kAqdxrB5qcZOL3M1HardUkOYh.', 'Khát máu quáaaaaaaa', 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731001312/shopbangiayuit/blue%20main.png.png', '0359660269', 'huynickao123@gmail.com', 'nha e o ho da', '12/6/2003', 'Customer'),
-(33, 'mingu', '$2y$10$skVtX7iiiFpBonp1YTvI7uRqF6g6hYydA43lcWp/rliZdeZybBPbO', 'Khát máu quá', 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731001312/shopbangiayuit/blue%20main.png.png', '0359660269', NULL, 'nha e o ho da', '12/5/2003', 'Customer'),
+(32, 'huydepzai', '$2y$10$IuH0vQ8el5Q4zpR6Bmm5Ye7tyF3kAqdxrB5qcZOL3M1HardUkOYh.', 'Khát máu quáaaaaaaa', 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731001312/shopbangiayuit/blue%20main.png.png', '0359660269', 'huynickao123@gmail.com', 'nha e o ho da', '2003/06/12', 'Customer'),
+(33, 'mingu', '$2y$10$skVtX7iiiFpBonp1YTvI7uRqF6g6hYydA43lcWp/rliZdeZybBPbO', 'Khát máu quá', 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731001312/shopbangiayuit/blue%20main.png.png', '0359660269', NULL, 'nha e o ho da', '2003/05/12', 'Customer'),
 (34, 'huydepzaiii', '$2y$10$H8f9tsd50Dr0wr/06H4P/ucYYKgmrVe3Of68MJEUNusZzkFz738Iy', NULL, 'https://nupet.vn/wp-content/uploads/2023/10/anh-avatar-cute-meo-nupet-2.jpg', NULL, NULL, NULL, NULL, 'Customer'),
-(36, 'minguu', '$2y$10$27kaNaO0dBbXuNEWuzmjVeJjBPMRR7NeT4MGHBhgRck8CsLHak112', 'Khát máu quáaaaaaaa', 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731089441/shopbangiayuit/red%20%282%29.jpg.jpg', '0359660269', NULL, 'nha e o ho da', '12/6/2003', 'Customer'),
+(36, 'minguu', '$2y$10$27kaNaO0dBbXuNEWuzmjVeJjBPMRR7NeT4MGHBhgRck8CsLHak112', 'Khát máu quáaaaaaaa', 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731089441/shopbangiayuit/red%20%282%29.jpg.jpg', '0359660269', NULL, 'nha e o ho da', '2003/05/12', 'Customer'),
 (37, 'minhquangu', '$2y$10$Mpybl4A6s4nTpwA5g.mq5.4Kfv/hEb/8f.UJ7FB8vgOQYXb83mJVa', NULL, 'https://nupet.vn/wp-content/uploads/2023/10/anh-avatar-cute-meo-nupet-2.jpg', NULL, NULL, NULL, NULL, 'Customer'),
 (38, 'aHuyNguAc', '$2y$10$zGGOgEu8m6HX6owHDDlGRebC4oe9/rUQoSjC/WBsoU6W8F8hC78na', NULL, 'https://nupet.vn/wp-content/uploads/2023/10/anh-avatar-cute-meo-nupet-2.jpg', NULL, '21522346@gm.uit.edu.vn', NULL, NULL, 'Customer');
 
@@ -504,31 +507,31 @@ ALTER TABLE `bannershop`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `categoryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `categoryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `detailinvoice`
 --
 ALTER TABLE `detailinvoice`
-  MODIFY `detailInvoiceId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `detailInvoiceId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `detailproduct`
 --
 ALTER TABLE `detailproduct`
-  MODIFY `detailProductId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `detailProductId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `feedbackId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `feedbackId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `forgetpassword`
@@ -540,25 +543,25 @@ ALTER TABLE `forgetpassword`
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invoiceId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `invoiceId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `manufacturer`
 --
 ALTER TABLE `manufacturer`
-  MODIFY `manufacturerId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `manufacturerId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `productotherimage`
 --
 ALTER TABLE `productotherimage`
-  MODIFY `productOtherImageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `productOtherImageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `shop`

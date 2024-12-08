@@ -1,7 +1,7 @@
 <?php
 namespace Src\Model;
 
-date_default_timezone_set('Asia/Ho_Chi_Minh');
+// date_default_timezone_set('Asia/Ho_Chi_Minh');
 class InvoiceModel
 {
 
@@ -111,9 +111,9 @@ class InvoiceModel
     {
         $statement = "
             INSERT INTO invoice 
-                (userId, address, note, orderDate, state, totalPrice, paymentMethod)
+                (userId, address, note, state, totalPrice, paymentMethod)
             VALUES
-                (:userId, :address, :note, :orderDate, :state, :totalPrice, :paymentMethod);
+                (:userId, :address, :note, :state, :totalPrice, :paymentMethod);
         ";
 
         try {
@@ -125,7 +125,7 @@ class InvoiceModel
                 'totalPrice' => $input['totalPrice'] ?? null,
                 'paymentMethod' => $input['paymentMethod'] ?? null,
                 'state' => "Pending",
-                'orderDate' => date('j/n/Y'),
+                // 'orderDate' => date('j/n/Y'),
             ));
 
             $lastId = $this->db->lastInsertId();

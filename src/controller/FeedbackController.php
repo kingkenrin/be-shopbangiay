@@ -61,7 +61,7 @@ class FeedbackController
         $result = $this->feedbackModel->findAll();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(array_map(function ($feedback) {
-            return formatRes::getData(['feedbackId', 'userId', 'name', 'email', 'phone', 'address', 'content'], $feedback);
+            return formatRes::getData(['feedbackId', 'userId', 'name', 'email', 'phone', 'address', 'content', 'createdAt'], $feedback);
         }, $result));
         return $response;
     }
@@ -78,7 +78,7 @@ class FeedbackController
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(
-            formatRes::getData(['feedbackId', 'userId', 'name', 'email', 'phone', 'address', 'content'], $result)
+            formatRes::getData(['feedbackId', 'userId', 'name', 'email', 'phone', 'address', 'content', 'createdAt'], $result)
         );
         return $response;
     }
@@ -97,7 +97,7 @@ class FeedbackController
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(array_map(function ($feedback) {
-            return formatRes::getData(['feedbackId', 'userId', 'name', 'email', 'phone', 'address', 'content'], $feedback);
+            return formatRes::getData(['feedbackId', 'userId', 'name', 'email', 'phone', 'address', 'content', 'createdAt'], $feedback);
         }, $result));
         return $response;
     }
@@ -128,7 +128,7 @@ class FeedbackController
         $this->feedbackModel->update($input);
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode(formatRes::getData(['feedbackId', 'userId', 'name', 'email', 'phone', 'address', 'content'], $input));
+        $response['body'] = json_encode(formatRes::getData(['feedbackId', 'userId', 'name', 'email', 'phone', 'address', 'content', 'createdAt'], $input));
         return $response;
     }
 

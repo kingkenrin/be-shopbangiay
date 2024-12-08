@@ -55,7 +55,7 @@ class UserController
         $result = $this->userModel->findAll();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(array_map(function ($user) {
-            return formatRes::getData(['username', 'name', 'avatar', 'phone', 'email', 'address', 'birthday', 'role'], $user);
+            return formatRes::getData(['userId', 'username', 'name', 'avatar', 'phone', 'email', 'address', 'birthday', 'role'], $user);
         }, $result));
         return $response;
     }
@@ -71,7 +71,7 @@ class UserController
         }
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode(formatRes::getData(['username', 'name', 'avatar', 'phone', 'email', 'address', 'birthday', 'role'], $result));
+        $response['body'] = json_encode(formatRes::getData(['userId', 'username', 'name', 'avatar', 'phone', 'email', 'address', 'birthday', 'role'], $result));
         return $response;
     }
 
@@ -109,7 +109,7 @@ class UserController
         $this->userModel->insert($input);
 
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
-        $response['body'] = json_encode(formatRes::getData(['username', 'name', 'avatar', 'phone', 'email', 'address', 'birthday', 'role'], $input));
+        $response['body'] = json_encode(formatRes::getData(['userId', 'username', 'name', 'avatar', 'phone', 'email', 'address', 'birthday', 'role'], $input));
         return $response;
     }
 
@@ -158,7 +158,7 @@ class UserController
         $this->userModel->update($input);
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode(formatRes::getData(['username', 'name', 'avatar', 'phone', 'email', 'address', 'birthday', 'role'], $input));
+        $response['body'] = json_encode(formatRes::getData(['userId', 'username', 'name', 'avatar', 'phone', 'email', 'address', 'birthday', 'role'], $input));
         return $response;
     }
 

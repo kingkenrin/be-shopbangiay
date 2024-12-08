@@ -14,7 +14,7 @@ class FeedbackModel
     {
         $statement = "
             SELECT 
-                feedbackId, userId, name, email, phone, address, content
+                feedbackId, userId, name, email, phone, address, content, createdAt
             FROM
                 feedback;
         ";
@@ -42,7 +42,7 @@ class FeedbackModel
 
         $statement = "
             SELECT 
-                feedbackId, userId, name, email, phone, address, content
+                feedbackId, userId, name, email, phone, address, content, createdAt
             FROM
                 feedback
             WHERE " . $conditions;
@@ -71,7 +71,7 @@ class FeedbackModel
 
         $statement = "
             SELECT 
-                feedbackId, userId, name, email, phone, address, content
+                feedbackId, userId, name, email, phone, address, content, createdAt
             FROM
                 feedback
             WHERE " . $conditions;
@@ -90,7 +90,7 @@ class FeedbackModel
     {
         $statement = "
             SELECT 
-                feedbackId, userId, name, email, phone, address, content
+                feedbackId, userId, name, email, phone, address, content, createdAt
             FROM
                 feedback
             WHERE feedbackId = ?;
@@ -124,6 +124,7 @@ class FeedbackModel
                 'phone' => $input['phone'],
                 'address' => $input['address'],
                 'content' => $input['content'],
+                // 'createdAt' => date('j/n/Y'),
             ));
 
             $lastId = $this->db->lastInsertId();
