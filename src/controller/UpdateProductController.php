@@ -84,7 +84,7 @@ class UpdateProductController
         }
 
         if (isset($_FILES['productImage'])) {
-            $this->productOtherImageModel->delete($input['productId']);
+            $this->productOtherImageModel->deleteByProductId($input['productId']);
 
             $input['otherImage'] = [];
 
