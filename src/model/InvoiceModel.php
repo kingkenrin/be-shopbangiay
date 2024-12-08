@@ -15,7 +15,7 @@ class InvoiceModel
     {
         $statement = "
             SELECT 
-                invoiceId, userId, address, note, orderDate, state, totalPrice, paymentMethod
+                invoiceId, userId, address, note, orderDate, state, totalPrice, paymentMethod, name, phone
             FROM
                 invoice;
         ";
@@ -43,7 +43,7 @@ class InvoiceModel
 
         $statement = "
             SELECT 
-                invoiceId, userId, address, note, orderDate, state, totalPrice, paymentMethod
+                invoiceId, userId, address, note, orderDate, state, totalPrice, paymentMethod, name, phone
             FROM
                 invoice
             WHERE " . $conditions;
@@ -72,7 +72,7 @@ class InvoiceModel
 
         $statement = "
             SELECT 
-                invoiceId, userId, address, note, orderDate, state, totalPrice, paymentMethod
+                invoiceId, userId, address, note, orderDate, state, totalPrice, paymentMethod, name, phone
             FROM
                 invoice
             WHERE " . $conditions;
@@ -91,7 +91,7 @@ class InvoiceModel
     {
         $statement = "
             SELECT 
-                invoiceId, userId, address, note, orderDate, state, totalPrice, paymentMethod
+                invoiceId, userId, address, note, orderDate, state, totalPrice, paymentMethod, name, phone
             FROM
                 invoice
             WHERE invoiceId = ?;
@@ -111,9 +111,9 @@ class InvoiceModel
     {
         $statement = "
             INSERT INTO invoice 
-                (userId, address, note, state, totalPrice, paymentMethod)
+                (userId, address, note, state, totalPrice, paymentMethod, name, phone)
             VALUES
-                (:userId, :address, :note, :state, :totalPrice, :paymentMethod);
+                (:userId, :address, :note, :state, :totalPrice, :paymentMethod, :name, :phone);
         ";
 
         try {
@@ -124,6 +124,8 @@ class InvoiceModel
                 'note' => $input['note'] ?? null,
                 'totalPrice' => $input['totalPrice'] ?? null,
                 'paymentMethod' => $input['paymentMethod'] ?? null,
+                'name' => $input['name'] ?? null,
+                'phone' => $input['phone'] ?? null,
                 'state' => "Pending",
                 // 'orderDate' => date('j/n/Y'),
             ));
@@ -142,7 +144,6 @@ class InvoiceModel
         $statement = "
             UPDATE invoice
             SET 
-                userId = COALESCE(:userId, userId), 
                 address = COALESCE(:address, address), 
                 note = COALESCE(:note, note), 
                 state = COALESCE(:state, state)
@@ -153,7 +154,6 @@ class InvoiceModel
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
                 'invoiceId' => $input['invoiceId'],
-                'userId' => $input['userId']?? null,
                 'address' => $input['address'] ?? null,
                 'note' => $input['note'] ?? null,
                 'state' => $input['state'] ?? null,
