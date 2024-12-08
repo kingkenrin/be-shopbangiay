@@ -148,7 +148,7 @@ class CategoryController
         $allProductOfCategory = $this->productModel->find(['categoryId' => $input['categoryId']]);
 
         foreach ($allProductOfCategory as $product) {
-            $this->productOtherImageModel->delete($product['productId']);
+            $this->productOtherImageModel->deleteByProductId($product['productId']);
             $this->detailProductModel->deleteByProductId($product['productId']);
             $this->cartModel->deleteByProductId(['productId' => $product['productId']]);
             $this->productModel->delete($product['productId']);

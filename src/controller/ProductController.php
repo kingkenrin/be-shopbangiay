@@ -217,7 +217,7 @@ class ProductController
             return $response;
         }
 
-        $this->productOtherImageModel->delete($input['productId']);
+        $this->productOtherImageModel->deleteByProductId($input['productId']);
         $this->detailProductModel->deleteByProductId($input['productId']);
         $this->cartModel->deleteByProductId(['productId' => $input['productId']]);
 

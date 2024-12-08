@@ -147,7 +147,7 @@ class ManufacturerController
         $allProductOfCategory = $this->productModel->find(['manufacturerId' => $input['manufacturerId']]);
 
         foreach ($allProductOfCategory as $product) {
-            $this->productOtherImageModel->delete($product['productId']);
+            $this->productOtherImageModel->deleteByProductId($product['productId']);
             $this->detailProductModel->deleteByProductId($product['productId']);
             $this->cartModel->deleteByProductId(['productId' => $product['productId']]);
             $this->productModel->delete($product['productId']);

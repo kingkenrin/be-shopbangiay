@@ -131,6 +131,22 @@ class ProductOtherImageModel
     {
         $statement = "
             DELETE FROM productotherimage
+            WHERE productOtherImageId = :productOtherImageId;
+        ";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('productOtherImageId' => $id));
+            return $statement->rowCount();
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
+    public function deleteByProductId($id)
+    {
+        $statement = "
+            DELETE FROM productotherimage
             WHERE productId = :productId;
         ";
 
