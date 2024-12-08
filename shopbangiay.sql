@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2024 at 03:16 PM
+-- Generation Time: Dec 08, 2024 at 06:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `bannershop` (
   `bannerId` int(11) NOT NULL,
-  `link` varchar(100) NOT NULL
+  `link` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
@@ -41,7 +41,12 @@ INSERT INTO `bannershop` (`bannerId`, `link`) VALUES
 (2, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1730913810/shopbangiayuit/red%20main.jpg.jpg'),
 (3, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173945/shopbangiayuit/red%20%282%29.jpg.jpg'),
 (4, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1730913810/shopbangiayuit/red%20main.jpg.jpg'),
-(6, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173945/shopbangiayuit/red%20%282%29.jpg.jpg');
+(6, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173945/shopbangiayuit/red%20%282%29.jpg.jpg'),
+(7, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731081634/shopbangiayuit/red.jpg.jpg'),
+(8, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731081634/shopbangiayuit/red.jpg.jpg'),
+(9, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733673459/shopbangiayuit/red.jpg.jpg'),
+(10, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733673585/shopbangiayuit/red.jpg.jpg'),
+(11, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733673705/shopbangiayuit/red.jpg.jpg');
 
 -- --------------------------------------------------------
 
@@ -65,7 +70,9 @@ INSERT INTO `cart` (`cartId`, `userId`, `productId`, `quantity`, `size`) VALUES
 (6, 32, 12, 10, 20),
 (9, 32, 18, 6, 30),
 (10, 33, 18, 3, 30),
-(11, 32, 19, 3, 25);
+(11, 32, 19, 3, 25),
+(20, 36, 18, 8, 20),
+(21, 36, 19, 21, 30);
 
 -- --------------------------------------------------------
 
@@ -221,19 +228,21 @@ CREATE TABLE `feedback` (
   `phone` varchar(100) NOT NULL,
   `address` varchar(100) NOT NULL,
   `content` varchar(100) NOT NULL,
-  `createdAt` varchar(100) NOT NULL DEFAULT current_timestamp()
+  `createdAt` varchar(100) NOT NULL DEFAULT current_timestamp(),
+  `isHandle` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `feedback`
 --
 
-INSERT INTO `feedback` (`feedbackId`, `userId`, `name`, `email`, `phone`, `address`, `content`, `createdAt`) VALUES
-(1, 32, 'Mingu', 'siuuuuuu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', ''),
-(2, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', ''),
-(3, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', ''),
-(4, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '8/12/2024'),
-(5, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 13:03:49');
+INSERT INTO `feedback` (`feedbackId`, `userId`, `name`, `email`, `phone`, `address`, `content`, `createdAt`, `isHandle`) VALUES
+(1, 32, 'Mingu', 'siuuuuuu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '', 0),
+(2, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '', 0),
+(3, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '', 0),
+(4, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '8/12/2024', 0),
+(5, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 13:03:49', 0),
+(6, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 23:14:36', 0);
 
 -- --------------------------------------------------------
 
@@ -269,20 +278,20 @@ CREATE TABLE `invoice` (
 --
 
 INSERT INTO `invoice` (`invoiceId`, `userId`, `address`, `note`, `orderDate`, `state`, `totalPrice`, `paymentMethod`) VALUES
-(6, 32, 'Gia Lai', 'thôi giao từ từ đi anh', '0000-00-00 00:00:00', 'Done', 0, ''),
-(8, 32, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 0, ''),
-(9, 32, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 12000000, ''),
-(10, 32, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 20000000, ''),
-(11, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 14010000, ''),
-(12, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 14010000, ''),
-(14, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 14010000, ''),
-(15, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 14010000, ''),
-(16, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 14010000, ''),
-(18, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 13239000, ''),
-(19, 33, 'Phu quoc', 'Giao le gium e', '0000-00-00 00:00:00', 'Pending', 13239000, 'momo'),
+(6, 32, 'Gia Lai', 'thôi giao từ từ đi anh', '2024-12-08 13:08:22', 'Done', 0, ''),
+(8, 32, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 0, ''),
+(9, 32, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 12000000, ''),
+(10, 32, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 20000000, ''),
+(11, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, ''),
+(12, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, ''),
+(14, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, ''),
+(15, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, ''),
+(16, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 14010000, ''),
+(18, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 13239000, ''),
+(19, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 13239000, 'momo'),
 (20, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 12:46:36', 'Pending', 13239000, 'momo'),
 (21, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 12:48:18', 'Pending', 13239000, 'momo'),
-(22, 33, 'Phu quoc', 'Giao le gium e', '', 'Pending', 13239000, 'momo'),
+(22, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 13239000, 'momo'),
 (23, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:03:53', 'Pending', 1743900, 'momo'),
 (24, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:03:53', 'Pending', 1743900, 'momo'),
 (25, 33, 'Phu quoc', 'Giao le gium e', '2024-12-08 13:08:22', 'Pending', 1743900, 'momo');
@@ -404,7 +413,7 @@ INSERT INTO `productotherimage` (`productOtherImageId`, `productId`, `link`) VAL
 
 CREATE TABLE `shop` (
   `shopId` int(11) NOT NULL,
-  `logo` varchar(100) NOT NULL,
+  `logo` varchar(300) NOT NULL,
   `name` varchar(100) NOT NULL,
   `about` varchar(100) NOT NULL,
   `address` varchar(100) NOT NULL,
@@ -431,7 +440,7 @@ CREATE TABLE `user` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
-  `avatar` varchar(100) DEFAULT NULL,
+  `avatar` varchar(300) DEFAULT NULL,
   `phone` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
@@ -541,13 +550,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `bannershop`
 --
 ALTER TABLE `bannershop`
-  MODIFY `bannerId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `bannerId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -571,7 +580,7 @@ ALTER TABLE `detailproduct`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `feedbackId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `feedbackId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `forgetpassword`
