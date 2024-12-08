@@ -105,7 +105,7 @@ class InvoiceController
                 $invoice['items'][] = ['productId' => $detailInvoice['productId'], 'quantity' => $detailInvoice['quantity'], 'size' => $detailInvoice['size']];
             }
 
-            return formatRes::getData(['invoiceId', 'userId', 'address', 'note', 'state', 'orderDate', 'items', 'paymentMethod'], $invoice);
+            return formatRes::getData(['invoiceId', 'userId', 'address', 'note', 'state', 'orderDate', 'items', 'paymentMethod', 'totalPrice'], $invoice);
         }, $result));
         return $response;
     }
@@ -150,7 +150,7 @@ class InvoiceController
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(
-            formatRes::getData(['invoiceId', 'userId', 'address', 'note', 'state', 'orderDate', 'items', 'paymentMethod'], $result)
+            formatRes::getData(['invoiceId', 'userId', 'address', 'note', 'state', 'orderDate', 'items', 'paymentMethod', 'totalPrice'], $result)
         );
         return $response;
     }
@@ -195,7 +195,7 @@ class InvoiceController
                 $invoice['items'][] = ['productId' => $detailInvoice['productId'], 'quantity' => $detailInvoice['quantity'], 'size' => $detailInvoice['size']];
             }
 
-            return formatRes::getData(['invoiceId', 'userId', 'address', 'note', 'state', 'orderDate', 'items', 'paymentMethod'], $invoice);
+            return formatRes::getData(['invoiceId', 'userId', 'address', 'note', 'state', 'orderDate', 'items', 'paymentMethod', 'totalPrice'], $invoice);
         }, $result));
         return $response;
     }
