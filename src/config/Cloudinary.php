@@ -28,8 +28,8 @@ class Cloudinary
         $result = $this->upload->upload($image['tmp_name'], [
             'folder' => 'shopbangiayuit',
             'public_id' => $image['name'],
-            'allowed_formats' => ['jpg', 'png'],
-            'overwrite' => true
+            // 'allowed_formats' => ['jpg', 'png'],
+            // 'overwrite' => true
         ]);
 
         return $result;

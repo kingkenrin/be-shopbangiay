@@ -38,9 +38,9 @@ class UpdateCartController
             //     }
             //     ;
             //     break;
-            // case 'POST':
-            //     $response = $this->addManufacturer();
-            //     break;
+            case 'POST':
+                $response = $this->updateCartOneItem();
+                break;
             case 'PUT':
                 $response = $this->updateCart();
                 break;
@@ -58,6 +58,60 @@ class UpdateCartController
     }
 
     private function updateCart()
+    {
+        $input = (array) json_decode(file_get_contents('php://input'), TRUE);
+
+
+        $user = $this->userModel->findById($input['userId']);
+
+        if (!$user) {
+            $response['status_code_header'] = 'HTTP/1.1 200 OK';
+            $response['body'] = json_encode(["success" => false, "message" => "wrong user"]);
+            return $response;
+        }
+
+        if (isset($input['items'])) {
+            foreach ($input['items'] as $item) {
+                $product = $this->productModel->findById($item['productId']);
+
+                if (!$product) {
+                    $response['status_code_header'] = 'HTTP/1.1 200 OK';
+                    $response['body'] = json_encode(["success" => false, "message" => "wrong product"]);
+                    return $response;
+                }
+
+                $detailProduct = $this->detailProductModel->findOne(["productId" => $item['productId'], "size" => $item['size']]);
+
+                if (!$detailProduct) {
+                    $response['status_code_header'] = 'HTTP/1.1 200 OK';
+                    $response['body'] = json_encode(["success" => false, "message" => "wrong size"]);
+                    return $response;
+                }
+
+                if (isset($item['quantity'])) {
+                    if ($item['quantity'] <= 0) {
+                        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+                        $response['body'] = json_encode(["success" => false, "message" => "quantity must be greater than 0"]);
+                        return $response;
+                    }
+                }
+            }
+
+            $this->cartModel->deleteByUserId($input['userId']);
+
+            foreach ($input['items'] as $item) {
+                $item['userId'] = $input['userId'];
+
+                $this->cartModel->insert($item);
+            }
+        }
+
+        $response['status_code_header'] = 'HTTP/1.1 201 Created';
+        $response['body'] = json_encode(["success" => true, "message" => "update successfully"]);
+        return $response;
+    }
+
+    private function updateCartOneItem()
     {
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 

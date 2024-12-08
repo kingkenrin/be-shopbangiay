@@ -14,7 +14,7 @@ class FeedbackModel
     {
         $statement = "
             SELECT 
-                feedbackId, userId, name, email, phone, address, content, createdAt
+                feedbackId, userId, name, email, phone, address, content, isHandle, createdAt
             FROM
                 feedback;
         ";
@@ -42,7 +42,7 @@ class FeedbackModel
 
         $statement = "
             SELECT 
-                feedbackId, userId, name, email, phone, address, content, createdAt
+                feedbackId, userId, name, email, phone, address, content, isHandle, createdAt
             FROM
                 feedback
             WHERE " . $conditions;
@@ -71,7 +71,7 @@ class FeedbackModel
 
         $statement = "
             SELECT 
-                feedbackId, userId, name, email, phone, address, content, createdAt
+                feedbackId, userId, name, email, phone, address, content, isHandle, createdAt
             FROM
                 feedback
             WHERE " . $conditions;
@@ -90,7 +90,7 @@ class FeedbackModel
     {
         $statement = "
             SELECT 
-                feedbackId, userId, name, email, phone, address, content, createdAt
+                feedbackId, userId, name, email, phone, address, content, isHandle, createdAt
             FROM
                 feedback
             WHERE feedbackId = ?;
@@ -146,7 +146,8 @@ class FeedbackModel
                 email = COALESCE(:email, email),
                 phone = COALESCE(:phone, phone),
                 address = COALESCE(:address, address),
-                content = COALESCE(:content, content)
+                content = COALESCE(:content, content),
+                isHandle = COALESCE(:isHandle, isHandle)
             WHERE feedbackId = :feedbackId;
         ";
 
@@ -160,6 +161,7 @@ class FeedbackModel
                 'phone' => $input['phone'] ?? null,
                 'address' => $input['address'] ?? null,
                 'content' => $input['content'] ?? null,
+                'isHandle' => $input['isHandle'] ?? null,
             ));
 
 

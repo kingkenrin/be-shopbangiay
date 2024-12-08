@@ -170,6 +170,22 @@ class CartModel
         }
     }
 
+    public function deleteByUserId($id)
+    {
+        $statement = "
+            DELETE FROM cart
+            WHERE userId = :userId;
+        ";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array('userId' => $id));
+            return $statement->rowCount();
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
     public function deleteByProductId($input)
     {
         $statement = "
