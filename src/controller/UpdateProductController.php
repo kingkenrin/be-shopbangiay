@@ -98,7 +98,9 @@ class UpdateProductController
                 }
             }
 
-            $input['otherImage'] += $_POST['productImage'];
+            if (isset($_POST['productImage'])) {
+                $input['otherImage'] += $_POST['productImage'];
+            }
 
             foreach ($input['otherImage'] as $link) {
                 $this->productOtherImageModel->insert(["productId" => $input['productId'], "link" => $link]);
