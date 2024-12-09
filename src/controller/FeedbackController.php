@@ -61,6 +61,12 @@ class FeedbackController
         $result = $this->feedbackModel->findAll();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(array_map(function ($feedback) {
+            //populate
+            $user = $this->userModel->findById($feedback['userId']);
+
+            $feedback['userId'] = $user;
+            //
+
             return formatRes::getData(['feedbackId', 'userId', 'name', 'email', 'phone', 'address', 'content', 'isHandle', 'createdAt'], $feedback);
         }, $result));
         return $response;
@@ -75,6 +81,12 @@ class FeedbackController
             $response['body'] = json_encode(["success" => false, "message" => "wrong feedback"]);
             return $response;
         }
+
+        //populate
+        $user = $this->userModel->findById($result['userId']);
+
+        $result['userId'] = $user;
+        //
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(
@@ -97,6 +109,12 @@ class FeedbackController
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(array_map(function ($feedback) {
+            //populate
+            $user = $this->userModel->findById($feedback['userId']);
+
+            $feedback['userId'] = $user;
+            //
+
             return formatRes::getData(['feedbackId', 'userId', 'name', 'email', 'phone', 'address', 'content', 'isHandle', 'createdAt'], $feedback);
         }, $result));
         return $response;

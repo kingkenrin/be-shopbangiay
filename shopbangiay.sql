@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 09, 2024 at 03:28 AM
+-- Generation Time: Dec 09, 2024 at 10:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -2279,7 +2279,7 @@ INSERT INTO `detailproduct` (`detailProductId`, `productId`, `size`, `quantity`)
 
 CREATE TABLE `feedback` (
   `feedbackId` int(11) NOT NULL,
-  `userId` int(11) NOT NULL,
+  `userId` int(11) DEFAULT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `phone` varchar(100) NOT NULL,
