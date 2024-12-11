@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2024 at 02:49 AM
+-- Generation Time: Dec 11, 2024 at 03:01 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -3484,15 +3484,16 @@ CREATE TABLE `shop` (
   `address` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `phone` varchar(100) NOT NULL,
-  `hotline` varchar(100) NOT NULL
+  `hotline` varchar(100) NOT NULL,
+  `logodark` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
 -- Dumping data for table `shop`
 --
 
-INSERT INTO `shop` (`shopId`, `logo`, `name`, `about`, `address`, `email`, `phone`, `hotline`) VALUES
-(1, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173943/shopbangiayuit/logo.jpg.jpg', 'shop bán giày uit', 'day la shop bangiayuit', 'o ngoai duonggg', 'uit@gmail.com', '091234567890', '123456');
+INSERT INTO `shop` (`shopId`, `logo`, `name`, `about`, `address`, `email`, `phone`, `hotline`, `logodark`) VALUES
+(1, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173943/shopbangiayuit/logo.jpg.jpg', 'shop bán giày uit', 'day la shop bangiayuit', 'o ngoai duonggg', 'uit@gmail.com', '091234567890', '123456', 'https://res.cloudinary.com/dxtslecpc/image/upload/v1731173943/shopbangiayuit/logo.jpg.jpg');
 
 -- --------------------------------------------------------
 
