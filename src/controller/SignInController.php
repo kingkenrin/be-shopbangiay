@@ -53,7 +53,7 @@ class SignInController
         }
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode(["success" => true, "message" => "login successfully", "userId" => $user['userId']]);
+        $response['body'] = json_encode(["success" => true, "message" => "login successfully", "userId" => $user['userId'], "role" => $user['role']]);
         return $response;
     }
 
