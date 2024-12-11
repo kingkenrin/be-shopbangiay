@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 09, 2024 at 10:41 AM
+-- Generation Time: Dec 11, 2024 at 02:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -67,12 +67,12 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cartId`, `userId`, `productId`, `quantity`, `size`) VALUES
-(6, 32, 12, 10, 20),
-(9, 32, 18, 6, 30),
 (10, 33, 18, 3, 30),
-(11, 32, 19, 3, 25),
-(20, 36, 18, 8, 20),
-(21, 36, 19, 21, 30);
+(24, 36, 18, 8, 20),
+(25, 36, 19, 21, 30),
+(26, 32, 12, 10, 20),
+(27, 32, 18, 6, 30),
+(28, 32, 19, 3, 25);
 
 -- --------------------------------------------------------
 
@@ -3510,7 +3510,7 @@ CREATE TABLE `user` (
   `email` varchar(100) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
   `birthday` varchar(100) DEFAULT NULL,
-  `role` enum('Staff','Customer') DEFAULT NULL
+  `role` enum('Staff','Customer','Admin') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
 --
@@ -3761,7 +3761,7 @@ ALTER TABLE `bannershop`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `category`
