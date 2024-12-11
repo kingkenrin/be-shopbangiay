@@ -64,7 +64,7 @@ class ShopController
                     $upload = (new Cloudinary())->uploadImage(['tmp_name' => $_FILES['shopImage']['tmp_name'][$index], 'name' => $file]);
                     $input['logo'] = $upload['secure_url'];
                 } else {
-                    if (strpos($file, "logodark") !== false) {
+                    if (strpos($file, "dark") !== false) {
                         $upload = (new Cloudinary())->uploadImage(['tmp_name' => $_FILES['shopImage']['tmp_name'][$index], 'name' => $file]);
                         $input['logodark'] = $upload['secure_url'];
                     } else {
