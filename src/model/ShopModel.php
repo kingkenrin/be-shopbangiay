@@ -61,7 +61,7 @@ class ShopModel
     {
         $statement = "
             SELECT 
-                shopId, logo, name, about, address, email, phone, hotline
+                shopId, logo, logodark, name, about, address, email, phone, hotline
             FROM
                 shop;";
 
@@ -98,15 +98,16 @@ class ShopModel
     {
         $statement = "
             INSERT INTO shop 
-                (logo, name, about, address, email, phone, hotline)
+                (logo, name, about, address, email, phone, hotline, logodark)
             VALUES
-                (:logo, :name, :about, :address, :email, :phone, :hotline);
+                (:logo, :name, :about, :address, :email, :phone, :hotline, :logodark);
         ";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
                 'logo' => $input['logo'] ?? null,
+                'logodark' => $input['logodark'] ?? null,
                 'name' => $input['name'] ?? null,
                 'about' => $input['about'] ?? null,
                 'address' => $input['address'] ?? null,
@@ -126,6 +127,7 @@ class ShopModel
             UPDATE shop
             SET 
                 logo = COALESCE(:logo, logo), 
+                logodark = COALESCE(:logodark, logodark), 
                 name = COALESCE(:name, name), 
                 about = COALESCE(:about, about), 
                 address = COALESCE(:address, address), 
@@ -138,6 +140,7 @@ class ShopModel
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
                 'logo' => $input['logo'] ?? null,
+                'logodark' => $input['logodark'] ?? null,
                 'name' => $input['name'] ?? null,
                 'about' => $input['about'] ?? null,
                 'address' => $input['address'] ?? null,

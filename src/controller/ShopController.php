@@ -58,14 +58,19 @@ class ShopController
 
         $input['banner'] = [];
 
-        if(isset($_FILES['shopImage'])){
+        if (isset($_FILES['shopImage'])) {
             foreach ($_FILES['shopImage']['name'] as $index => $file) {
                 if (strpos($file, "logo") !== false) {
                     $upload = (new Cloudinary())->uploadImage(['tmp_name' => $_FILES['shopImage']['tmp_name'][$index], 'name' => $file]);
                     $input['logo'] = $upload['secure_url'];
                 } else {
-                    $upload = (new Cloudinary())->uploadImage(['tmp_name' => $_FILES['shopImage']['tmp_name'][$index], 'name' => $file]);
-                    $input['banner'][] = $upload['secure_url'];
+                    if (strpos($file, "logodark") !== false) {
+                        $upload = (new Cloudinary())->uploadImage(['tmp_name' => $_FILES['shopImage']['tmp_name'][$index], 'name' => $file]);
+                        $input['logodark'] = $upload['secure_url'];
+                    } else {
+                        $upload = (new Cloudinary())->uploadImage(['tmp_name' => $_FILES['shopImage']['tmp_name'][$index], 'name' => $file]);
+                        $input['banner'][] = $upload['secure_url'];
+                    }
                 }
             }
         }
@@ -79,7 +84,7 @@ class ShopController
             $this->shopModel->update($input);
         }
 
-        foreach($input['banner'] as $image){
+        foreach ($input['banner'] as $image) {
             $this->bannerShopModel->insert(['link' => $image]);
         }
 
