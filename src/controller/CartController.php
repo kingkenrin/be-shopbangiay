@@ -90,13 +90,15 @@ class CartController
 
     private function getCartByUserId($id)
     {
-        $result = $this->cartModel->find(["userId" => $id]);
+        $user = $this->userModel->findById($id);
 
-        if (!$result) {
+        if (!$user) {
             $response['status_code_header'] = 'HTTP/1.1 200 OK';
-            $response['body'] = json_encode(["success" => false, "message" => "wrong cart"]);
+            $response['body'] = json_encode(["success" => false, "message" => "wrong user"]);
             return $response;
         }
+
+        $result = $this->cartModel->find(["userId" => $id]);
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(array_map(function ($cart) {
@@ -243,7 +245,7 @@ class CartController
             return $response;
         }
 
-        $this->cartModel->delete($cart['cartId']);
+        $this->cartModel->deleteByUserId($input['userId']);
 
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode(["success" => true, "message" => "delete successfully"]);
