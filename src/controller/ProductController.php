@@ -175,7 +175,7 @@ class ProductController
         $result['otherImage'] = [];
 
         foreach ($_FILES['productImage']['name'] as $index => $file) {
-            if (strpos($file, "main") !== false) {
+            if (strpos(strtolower($file), "main") !== false) {
                 $upload = (new Cloudinary())->uploadImage(['tmp_name' => $_FILES['productImage']['tmp_name'][$index], 'name' => $file]);
                 $result['mainImage'] = $upload['secure_url'];
             } else {

@@ -60,13 +60,13 @@ class ShopController
 
         if (isset($_FILES['shopImage'])) {
             foreach ($_FILES['shopImage']['name'] as $index => $file) {
-                if (strpos($file, "logo") !== false) {
+                if (strpos(strtolower($file), "logodark") !== false) {
                     $upload = (new Cloudinary())->uploadImage(['tmp_name' => $_FILES['shopImage']['tmp_name'][$index], 'name' => $file]);
-                    $input['logo'] = $upload['secure_url'];
+                    $input['logodark'] = $upload['secure_url'];
                 } else {
-                    if (strpos($file, "dark") !== false) {
+                    if (strpos(strtolower($file), "logo") !== false) {
                         $upload = (new Cloudinary())->uploadImage(['tmp_name' => $_FILES['shopImage']['tmp_name'][$index], 'name' => $file]);
-                        $input['logodark'] = $upload['secure_url'];
+                        $input['logo'] = $upload['secure_url'];
                     } else {
                         $upload = (new Cloudinary())->uploadImage(['tmp_name' => $_FILES['shopImage']['tmp_name'][$index], 'name' => $file]);
                         $input['banner'][] = $upload['secure_url'];
