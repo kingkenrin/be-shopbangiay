@@ -77,12 +77,12 @@ class UserController
 
     private function addUser()
     {
+        $input = $_POST;
+
         if (isset($_FILES['avatar'])) {
             $upload = (new Cloudinary())->uploadImage($_FILES['avatar']);
             $input['avatar'] = $upload['secure_url'];
         }
-        $input = $_POST;
-
 
         $user = $this->userModel->find(["username" => $input['username']]);
 
