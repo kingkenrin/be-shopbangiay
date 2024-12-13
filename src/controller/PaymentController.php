@@ -41,8 +41,8 @@ class PaymentController
             $accessKey = 'F8BBA842ECF85';
             $secretKey = 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
             $partnerCode = 'MOMO';
-            $redirectUrl = 'http://localhost:5174/payment'; // Redirect URL
-            $ipnUrl = 'http://localhost:5174/payment'; // IPN URL
+            $redirectUrl = 'http://localhost:5173/payment'; // Redirect URL
+            $ipnUrl = 'http://localhost:5173/payment'; // IPN URL
             $requestType = "payWithMethod";
 
             // Order ID and Request ID (use timestamp for uniqueness)
