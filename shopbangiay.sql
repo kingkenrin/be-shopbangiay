@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2024 at 03:12 PM
+-- Generation Time: Dec 17, 2024 at 05:40 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -2415,12 +2415,12 @@ CREATE TABLE `feedback` (
 --
 
 INSERT INTO `feedback` (`feedbackId`, `userId`, `name`, `email`, `phone`, `address`, `content`, `createdAt`, `isHandle`) VALUES
-(1, 32, 'Mingu', 'siuuuuuu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 23:14:36', 0),
-(2, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 23:14:36', 0),
-(3, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 23:14:36', 0),
-(4, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 23:14:36', 0),
-(5, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 13:03:49', 1),
-(6, 32, 'Mingu', 'siu@gmail.com', '09154561', 'ho da', 'shop dep tiem gium di', '2024-12-08 23:14:36', 1);
+(1, 32, 'Nguyen van a', 'kh1@gmail.com', '09154561', 'tp Hcm', 'Phan hoi cho shop', '2024-12-08 23:14:36', 0),
+(2, 32, 'Nguyen van a', 'kh1@gmail.com', '09154561', 'tp Hcm', 'Phan hoi cho shop', '2024-12-08 23:14:36', 0),
+(3, 32, 'Nguyen van a', 'kh1@gmail.com', '09154561', 'tp Hcm', 'Phan hoi cho shop', '2024-12-08 23:14:36', 0),
+(4, 32, 'Nguyen van a', 'kh1@gmail.com', '09154561', 'tp Hcm', 'Phan hoi cho shop', '2024-12-08 23:14:36', 0),
+(5, 32, 'Nguyen van a', 'kh1@gmail.com', '09154561', 'tp Hcm', 'Phan hoi cho shop', '2024-12-08 13:03:49', 1),
+(6, 32, 'Nguyen van a', 'kh1@gmail.com', '09154561', 'tp Hcm', 'Phan hoi cho shop', '2024-12-08 23:14:36', 1);
 
 -- --------------------------------------------------------
 
