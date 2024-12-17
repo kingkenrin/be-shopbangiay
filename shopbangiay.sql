@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2024 at 02:13 PM
+-- Generation Time: Dec 17, 2024 at 03:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -3717,7 +3717,7 @@ CREATE TABLE `shop` (
   `shopId` int(11) NOT NULL,
   `logo` varchar(300) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `about` varchar(100) NOT NULL,
+  `about` varchar(3000) NOT NULL,
   `address` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `phone` varchar(100) NOT NULL,
@@ -3730,7 +3730,7 @@ CREATE TABLE `shop` (
 --
 
 INSERT INTO `shop` (`shopId`, `logo`, `name`, `about`, `address`, `email`, `phone`, `hotline`, `logodark`) VALUES
-(1, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733954181/shopbangiayuit/logo.png.png', 'shop bán giày uit', 'day la shop bangiayuit', 'Đường Hàn Thuyên, khu phố 6 P, Thủ Đức, Hồ Chí Minh', 'uit@gmail.com', '091234567890', '123456', 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733989128/shopbangiayuit/logodark.png.png');
+(1, 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733954181/shopbangiayuit/logo.png.png', 'Shoes Store', 'Shoes Store là địa chỉ lý tưởng dành cho những tín đồ yêu giày, mang đến những thiết kế đa dạng từ giày thể thao năng động, giày công sở thanh lịch đến giày thời trang hiện đại. Chúng tôi cam kết cung cấp sản phẩm chất lượng cao, bền đẹp và thoải mái, giúp bạn tự tin khẳng định phong cách trong mọi hoàn cảnh. Với sự cập nhật liên tục các xu hướng mới nhất và dịch vụ tư vấn tận tâm, Shoes Store sẽ là người bạn đồng hành hoàn hảo trên từng bước chân của bạn.', 'Đường Hàn Thuyên, khu phố 6 P, Thủ Đức, Hồ Chí Minh', 'uit@gmail.com', '091234567890', '123456', 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733989128/shopbangiayuit/logodark.png.png');
 
 -- --------------------------------------------------------
 
