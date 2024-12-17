@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2024 at 05:40 PM
+-- Generation Time: Dec 17, 2024 at 05:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -3907,7 +3907,8 @@ INSERT INTO `user` (`userId`, `username`, `password`, `name`, `avatar`, `phone`,
 (181, 'minguuiigh', '$2y$10$5z9V/JQcTiuEk37RhjdzK.gP90Um7PjbsDNRjEGlsivZRMV5NdEwi', 'Nhân viên 3', 'https://nupet.vn/wp-content/uploads/2023/10/anh-avatar-cute-meo-nupet-2.jpg', '0359660269', 'nv3@gmail.com', 'nha e o ho da', '2003/05/12', 'Staff'),
 (182, 'minguuiigha', '$2y$10$avNo5iKACpiL3lszslDu4OS1n66kYkwOtPVaA21on4JBnMyacwIqu', 'Nhân viên 1', 'https://res.cloudinary.com/dxtslecpc/image/upload/v1733977496/shopbangiayuit/logo.jpg.jpg', '0359660269', 'nv4@gmail.com', 'nha e o ho da', '2003/05/12', 'Staff'),
 (183, 'admin', '$2y$10$IQ2n7n/YFcitgP0Tt..ySOQN4x7y/7CUZswuTJeaHXTbQMvEW36.u', 'Admin', 'https://nupet.vn/wp-content/uploads/2023/10/anh-avatar-cute-meo-nupet-2.jpg', '0359660269', NULL, NULL, '2003/05/12', 'Admin'),
-(184, 'staff', '$2y$10$LqIOav9/HaPP6cvT0ovz.uyHgdTSPVpt188l35kugS6wtXgfbjIMe', 'Staff', 'https://nupet.vn/wp-content/uploads/2023/10/anh-avatar-cute-meo-nupet-2.jpg', '0359660269', NULL, NULL, '2003/05/12', 'Staff');
+(184, 'staff', '$2y$10$LqIOav9/HaPP6cvT0ovz.uyHgdTSPVpt188l35kugS6wtXgfbjIMe', 'Staff', 'https://nupet.vn/wp-content/uploads/2023/10/anh-avatar-cute-meo-nupet-2.jpg', '0359660269', NULL, NULL, '2003/05/12', 'Staff'),
+(185, 'user', '$2y$10$YhiawIXyrcPav.hvYkKPLejC47lEY7Sou61pcnehoBMNrB3O8zQiu', 'User', 'https://nupet.vn/wp-content/uploads/2023/10/anh-avatar-cute-meo-nupet-2.jpg', '0359660269', NULL, NULL, '2003/05/12', 'Customer');
 
 --
 -- Indexes for dumped tables
@@ -4071,7 +4072,7 @@ ALTER TABLE `shop`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
